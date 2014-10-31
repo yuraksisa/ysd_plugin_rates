@@ -73,12 +73,12 @@
 
           <div class="formrow">
             <label for="units" class="fieldtitle"><%= t.rate_price_management.form.units %> <span class="mandatoryfield">*</span></label>
-            <input type="text" maxlength="5" id="units" name="units" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.units).toFixed(2) %>" <%% } %> />
+            <input type="text" maxlength="5" id="units" name="units" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.units).toFixed(2) %>" <%% } else { %> value="0" <%% } %> />
           </div>
 
           <div class="formrow">
             <label for="price" class="fieldtitle"><%= t.rate_price_management.form.price %> <span class="mandatoryfield">*</span></label>
-            <input type="text" maxlength="5" id="price" name="price" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.price).toFixed(2) %>" <%% } %> />
+            <input type="text" maxlength="5" id="price" name="price" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.price).toFixed(2) %>" <%% } else { %> value="0" <%% } %> />
           </div>
 
         </div>
