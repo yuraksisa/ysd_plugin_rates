@@ -1,0 +1,71 @@
+ require(['jquery', 'YSDEntityManagement', 'YSDForms', 'jquery.validate','json2'], function($, EntityManagement, YSDForms) {
+
+ 
+  function RateFactorHook() {
+ 	   
+    this.entityKey = function(entity) {
+      return entity.id;
+    }
+
+    this.onEdit = function(entity) {
+      $('#name').focus();  	
+      this.configForm(entity);
+    };
+  
+    this.onNew = function() {
+  	  $('#name').focus();
+  	  this.configForm(null);
+    }
+    
+    this.onRenderEntities = function(entities) {
+      $('.elements-search').show();	
+    }
+    
+    this.configForm = function(entity) {
+             
+         this.configValidation();
+    	
+    }
+    
+    this.configValidation = function() {
+           	 
+       	 $('#rate_factor_def_management_form').validate({
+       	  	
+            submitHandler: function(form) 
+            {
+               return false;
+            },
+                 	        	   
+       	    rules : { // rules
+       	       'name': {
+       	         required: true	
+       	       }
+       	    },
+       	    
+       	    messages : { // messages
+       	       'name': {
+       	       	 required : '<%=t.rate_factor_def_management.form.name_required%>'
+       	       }
+       	    }
+       	    
+       	  }
+       	 );
+    	
+    	
+    }
+  	
+  };
+  
+  var urls = { 
+  	           query_url  : '/api/rate-factor-defs',
+    	         create_url : '/api/rate-factor-def',
+  	           update_url : '/api/rate-factor-def',
+  	           delete_url : '/api/rate-factor-def',
+  	           get_url    : '/api/rate-factor-def'
+  	         };
+  
+  var rateFactorHook = new RateFactorHook();
+  var reateFactorManager = new EntityManagement(urls, 'rate-factor', 
+      <%= rate_factor_defs_page_size %>, rateFactorHook, {prefix: '/admin/rates'});
+ 
+ });

@@ -1,0 +1,104 @@
+months:
+  january: Gener
+  february: Febrer
+  march: Març
+  april: Abril
+  may: Maig
+  june: Juny
+  july: Juliol
+  august: Agost
+  september: Setembre
+  october: Octobre
+  november: Novembre
+  december: Decembre
+rates_console:
+  title: Tarifes
+  seasons: Temporades
+  factors: Factors
+  rates: Preus
+rate_season_def_management:
+  title: Definició temporades
+  description: Definició temporades
+  table:
+    id: Id
+    name: Nom
+    description: Descripció
+    seasons: Gestionar temporades    
+  form:
+    name: Nom
+    description: Descripció
+    value: Valor
+    name_required: Nom obligatori
+rate_season_management:
+  title: Llista temporaades
+  description: Llista temporaades
+  table:
+    id: Id
+    name: Nom
+    from: Des de
+    to: Fins
+  form:
+    name: Nom
+    from: Des de
+    to: Fins
+    name_required: Nom obligatori  
+rate_factor_def_management:
+  title: Definició Factors
+  description: Definición Factors
+  table:
+    id: Id
+    name: Nom
+    description: Descripció
+    factors: Gestió dels factors    
+  form:
+    name: Nom
+    description: Descripció
+    value: Valor
+    name_required: Nom obligatori
+rate_factor_management:
+  title: Factors 
+  description: Factors
+  table:
+    from: Des de
+    to: Fins
+    factor: Factor    
+  form:
+    from: Des de
+    to: Fins
+    factor: Factor
+    from_required: Des de obligatori
+    to_required: Fins obligatori
+    factor_required: Factor obligatori     
+rate_price_def_management:
+  title: Definició preus
+  description: Definición preus
+  table:
+    id: Id
+    name: Nom
+    description: Descripció
+    prices: Gestionar preus
+  form:
+    name: Nom
+    description: Descripció
+    max_price: Preu màxim
+    base_price: Preu base
+    type: Tipus
+    type_no_season: Preu general
+    type_season: Preus per temporada
+    factor: Factor
+    season: Temporada
+    name_required: Nom obligatori             
+    type_required: Tipus obligatori
+rate_price_management:
+  title: Preus
+  description: Preus
+  table:
+    season: Temporada
+    units: Unitats
+    price: Preu
+  form:
+    season: Temporada
+    units: Unitats
+    price: Preu
+    units_required: Unitats obligatorio
+    price_required: Preu obligatorio       

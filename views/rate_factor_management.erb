@@ -1,0 +1,94 @@
+<%= include('entity-management') %>
+
+<!-- Renders the element description -->
+
+<script type="text/tmpl" id="elements_title">
+  <h2 class="entity-title"><%=t.rate_factor_management.title%> <%=factor_definition.name%></h2>
+</script>
+
+<script type="text/tmpl" id="elements_description">
+    <%= t.rate_factor_management.description %>
+</script>
+
+<!-- Renders the elements container -->
+<script type="text/tmpl" id="elements_container_template">
+
+  <table id="elements_table" class="table">
+     <thead class="table-header">
+       <tr>
+         <th class="table-header-title" scope="col" style="width:30%"><%= t.rate_factor_management.table.from %></th>
+         <th class="table-header-title" scope="col" style="width:30%"><%= t.rate_factor_management.table.to %></th>
+         <th class="table-header-title" scope="col" style="width:30%"><%= t.rate_factor_management.table.factor %></th>
+       </tr>
+     </thead>
+     <tbody id="elements_tbody" class="table-tbody">             
+     </tbody>
+  </table>
+
+</script>
+
+<!-- Renders one element in the elements list view -->
+        
+<script type="text/tmpl" id="elements_list_template">
+
+    <tr class="table-row" rel="<%%= index %>" id="element_row_<%%=index%>">
+      <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= entity.from %></td>
+      <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= entity.to %></td>
+      <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= new Number(entity.factor).toFixed(2) %></td>
+    </tr>
+
+</script>
+
+<!-- Renders one element in the element view (full detailed) -->
+
+<script type="text/tmpl" id="element_template">
+
+
+</script>
+
+<!-- Renders the form to edit an element -->
+
+<script type="text/tmpl" id="element_template_form">
+              
+     <form name="element" id="rate_factor_management_form">
+        
+        <div class="form-fields">
+        
+          <input type="hidden" id="factor_definition[id]" name="factor_definition[id]" value="<%=factor_definition.id%>"/>
+
+          <%% if (entity) { %>
+          <input type="hidden" id="id" name="id" value="<%%=entity.id%>"/>
+          <%% } %>
+
+          <div class="formrow">
+            <label for="from" class="fieldtitle"><%= t.rate_factor_management.form.from %> <span class="mandatoryfield">*</span></label>
+            <input type="text" maxlength="2" id="from" name="from" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.from %>" <%% } %> />
+          </div>
+
+          <div class="formrow">
+            <label for="to" class="fieldtitle"><%= t.rate_factor_management.form.to %> <span class="mandatoryfield">*</span></label>
+            <input type="text" maxlength="2" id="to" name="to" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.to %>" <%% } %> />
+          </div>
+
+          <div class="formrow">
+            <label for="factor" class="fieldtitle"><%= t.rate_factor_management.form.factor %> <span class="mandatoryfield">*</span></label>
+            <input type="text" maxlength="5" id="factor" name="factor" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.factor).toFixed(2) %>" <%% } %> />
+          </div>
+
+        </div>
+        
+        <div class="bottom-navigation-bar navigation-bar">
+             <div class="navigation-bar-crud-buttons">
+                <%% if (entity) { %>
+                  <input type="submit" class="update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
+                <%% } 
+                   else { %>
+                  <input type="submit" class="create-entity-button action-button entity-management-button" value="<%=t.entitymanagement.create%>"/>
+                <%% } %>
+             </div>
+        </div>
+     
+     </form>
+     
+
+</script>

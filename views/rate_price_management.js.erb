@@ -1,0 +1,93 @@
+ require(['jquery', 'YSDEntityManagement', 'YSDForms', 'YSDRemoteDataSource','YSDSelectSelector', 
+          'jquery.validate','json2'], 
+          function($, EntityManagement, YSDForms, RemoteDataSource, SelectSelector) {
+
+ 
+  function PriceHook() {
+ 	   
+    this.entityKey = function(entity) {
+      return entity.id;
+    }
+
+    this.onEdit = function(entity) {
+      this.configForm(entity);
+    };
+  
+    this.onNew = function() {
+  	  this.configForm(null);
+    }
+    
+    
+    this.configForm = function(entity) {
+      
+      if ($('#season')) {
+        $('#season').focus();    
+      }
+      else {
+        $('#units').focus();    
+      }
+
+      <% if price_definition.type == :season %>
+      var seasonDataSource= new RemoteDataSource('/api/rate-seasons/<%=price_definition.season_definition.id%>',
+          {'id':'id','description':function(data){
+            return data.name + " (" +  
+                   priceManager.view.formatPadNumber(data.from_month,2) + '/' + 
+                   priceManager.view.formatPadNumber(data.from_day,2) + " - " + 
+                   priceManager.view.formatPadNumber(data.to_month,2) + '/' + 
+                   priceManager.view.formatPadNumber(data.to_day, 2) + ")";
+          }});
+      var seasonValue = (entity && entity.season_id)?entity.season_id:null; 
+      var seasonSelector = new SelectSelector('season[id]', seasonDataSource, seasonValue);   
+      <% end %>
+
+      this.configValidation();
+    }
+    
+    this.configValidation = function() {
+           	 
+       	 $('#rate_price_management_form').validate({
+       	  	
+            submitHandler: function(form) 
+            {
+               return false;
+            },
+                 	        	   
+       	    rules : { // rules
+       	       'units': {
+       	         required: true	
+       	       },
+               'price': {
+                 required: true 
+               }
+       	    },
+       	    
+       	    messages : { // messages
+       	       'units': {
+       	       	 required : '<%=t.rate_price_management.form.units_required%>'
+       	       },
+               'price': {
+                 required : '<%=t.rate_price_management.form.price_required%>'
+               }
+       	    }
+       	    
+       	  }
+       	 );
+    	
+    	
+    }
+  	
+  };
+  
+  var urls = { 
+  	           query_url  : '/api/rate-prices',
+    	         create_url : '/api/rate-price',
+  	           update_url : '/api/rate-price',
+  	           delete_url : '/api/rate-price',
+  	           get_url    : '/api/rate-price'
+  	         };
+  
+  var priceHook = new PriceHook();
+  var priceManager = new EntityManagement(urls, 'rate-price', 
+      <%= rate_price_page_size %>, priceHook, {prefix: '/admin/rates',parent_filtered:true});
+ 
+ });

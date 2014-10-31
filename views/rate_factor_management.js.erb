@@ -1,0 +1,78 @@
+ require(['jquery', 'YSDEntityManagement', 'YSDForms', 'jquery.validate','json2'], function($, EntityManagement, YSDForms) {
+
+ 
+  function RateFactorHook() {
+ 	   
+    this.entityKey = function(entity) {
+      return entity.id;
+    }
+
+    this.onEdit = function(entity) {
+      $('#from').focus();  	
+      this.configForm(entity);
+    };
+  
+    this.onNew = function() {
+  	  $('#from').focus();
+  	  this.configForm(null);
+    }
+    
+    
+    this.configForm = function(entity) {
+      this.configValidation();
+    }
+    
+    this.configValidation = function() {
+           	 
+       	 $('#rate_factor_management_form').validate({
+       	  	
+            submitHandler: function(form) 
+            {
+               return false;
+            },
+                 	        	   
+       	    rules : { // rules
+       	       'from': {
+       	         required: true	
+       	       },
+               'to': {
+                 required: true 
+               },
+               'factor': {
+                 required: true 
+               }
+       	    },
+       	    
+       	    messages : { // messages
+       	       'from': {
+       	       	 required : '<%=t.rate_factor_management.form.from_required%>'
+       	       },
+               'to': {
+                 required : '<%=t.rate_factor_management.form.to_required%>'
+               },
+               'factor': {
+                 required : '<%=t.rate_factor_management.form.factor_required%>'
+               }
+       	    }
+       	    
+       	  }
+       	 );
+    	
+    	
+    }
+  	
+  };
+  
+  var urls = { 
+  	           query_url  : '/api/rate-factors',
+    	         create_url : '/api/rate-factor',
+  	           update_url : '/api/rate-factor',
+  	           delete_url : '/api/rate-factor',
+  	           get_url    : '/api/rate-factor'
+  	         };
+  
+  var rateFactorHook = new RateFactorHook();
+  var reateFactorManager = new EntityManagement(urls, 'rate-factor', 
+      <%= rate_factor_page_size %>, rateFactorHook, {prefix: '/admin/rates',parent_filtered:true});
+ 
+ });

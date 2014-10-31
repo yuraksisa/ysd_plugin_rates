@@ -1,0 +1,104 @@
+months:
+  january: Enero
+  february: Febrero
+  march: Marzo
+  april: Abril
+  may: Mayo
+  june: Junio
+  july: Julio
+  august: Agosto
+  september: Septiembre
+  october: Octubre
+  november: Noviembre
+  december: Diciembre
+rates_console:
+  title: Tarifas
+  seasons: Temporadas
+  factors: Factores
+  rates: Precios
+rate_season_def_management:
+  title: Definición de temporadas
+  description: Definición de temporadas
+  table:
+    id: Id
+    name: Nombre
+    description: Descripción
+    seasons: Gestionar temporadas
+  form:
+    name: Nombre
+    description: Descripción
+    value: Valor
+    name_required: Nombre obligatorio    
+rate_season_management:
+  title: Lista de temporadas
+  description: Lista de las temporadas
+  table:
+    id: Id
+    name: Nombre
+    from: Desde
+    to: Hasta
+  form:
+    name: Nombre
+    from: Desde
+    to: Hasta
+    name_required: Nombre obligatorio
+rate_factor_def_management:
+  title: Definición de Factores
+  description: Definición de Factores
+  table:
+    id: Id
+    name: Nombre
+    description: Descripción
+    factors: Gestionar factores
+  form:
+    name: Nombre
+    description: Descripción
+    value: Valor
+    name_required: Nombre obligatorio     
+rate_factor_management:
+  title: Factores 
+  description: Factores
+  table:
+    from: Desde
+    to: Hasta
+    factor: Factor    
+  form:
+    from: Desde
+    to: Hasta
+    factor: Factor
+    from_required: Desde obligatorio
+    to_required: Hasta obligatorio
+    factor_required: Factor obligatorio     
+rate_price_def_management:
+  title: Definición de precios
+  description: Definición de precios
+  table:
+    id: Id
+    name: Nombre
+    description: Descripción
+    prices: Gestión de precios    
+  form:
+    name: Nombre
+    description: Descripción
+    max_price: Precio máximo
+    base_price: Precio base
+    type: Tipo
+    type_no_season: Precio general
+    type_season: Precios por temporada
+    factor: Factor
+    season: Temporada
+    name_required: Nombre obligatorio     
+    type_required: Tipo obligatorio 
+rate_price_management:
+  title: Precios
+  description: Precios
+  table:
+    season: Temporada
+    units: Unidades
+    price: Precio
+  form:
+    season: Temporada
+    units: Unidades
+    price: Precio
+    units_required: Unidades obligatorio
+    price_required: Precio obligatorio

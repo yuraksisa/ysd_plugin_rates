@@ -1,0 +1,104 @@
+months:
+  january: January
+  february: February
+  march: March
+  april: April
+  may: May
+  june: June
+  july: July
+  august: August
+  september: September
+  october: October
+  november: November
+  december: December
+rates_console:
+  title: Rates
+  seasons: Seasons
+  factors: Factors
+  rates: Prices
+rate_season_def_management:
+  title: Season definitions
+  description: Season definitions
+  table:
+    id: Id
+    name: Name
+    description: description
+    seasons: Manage seasons    
+  form:
+    name: Name
+    description: Description
+    value: Value
+    name_required: Name is required
+rate_season_management:
+  title: Seasons list
+  description: Seasons list
+  table:
+    id: Id
+    name: Name
+    from: From
+    to: To
+  form:
+    name: Name
+    from: From
+    to: To       
+    name_required: Name is required
+rate_factor_def_management:
+  title: Factor definitions
+  description: Factor definitions
+  table:
+    id: Id
+    name: Name
+    description: description
+    factors: Manage factors    
+  form:
+    name: Name
+    description: Description
+    value: Value
+    name_required: Name is required
+rate_factor_management:
+  title: Factors 
+  description: Factors
+  table:
+    from: From
+    to: To
+    factor: Factor    
+  form:
+    from: From
+    to: To
+    factor: Factor
+    from_required: From is required
+    to_required: To is required
+    factor_required: Factor is required               
+rate_price_def_management:
+  title: Price definitions
+  description: Price definitionss
+  table:
+    id: Id
+    name: Name
+    description: Description
+    prices: Prices management    
+  form:
+    name: Name
+    description: Description
+    max_price: Max price
+    base_price: Base price
+    type: Type
+    type_no_season: General price
+    type_season: Season price    
+    factor: Factor
+    season: Temporada
+    name_required: Name is required   
+    type_required: Type is required
+rate_price_management:
+  title: Prices
+  description: Prices
+  table:
+    season: Season
+    units: Units
+    price: Price
+  form:
+    season: Season
+    units: Units
+    price: Price
+    units_required: Units is required
+    price_required: Price is required             

@@ -1,0 +1,117 @@
+ require(['jquery', 'YSDEntityManagement', 'YSDRemoteDataSource','YSDSelectSelector',
+  'YSDForms', 'jquery.validate','json2'], function($, EntityManagement, RemoteDataSource, SelectSelector, YSDForms) {
+
+ 
+  function RatePriceDefinitionHook() {
+ 	   
+    this.entityKey = function(entity) {
+      return entity.id;
+    }
+
+    this.onEdit = function(entity) {
+      $('#name').focus();  	
+      this.configForm(entity);
+    };
+  
+    this.onNew = function() {
+  	  $('#name').focus();
+  	  this.configForm(null);
+    }
+    
+    this.onRenderEntities = function(entities) {
+      $('.elements-search').show();	
+    }
+    
+    this.adaptFormData = function(data) {
+            
+      if (data.factor_definition.id == '') {
+        data.factor_definition = null;
+      }
+
+      if (data.season_definition.id == '') {
+        data.season_definition = null;
+      }
+
+      return data;  
+      
+    }
+
+    this.configForm = function(entity) {
+             
+      if (entity) {
+        $('#type').prop('disabled', 'true');
+        if (entity.type == 'season') {
+          $('#season').show();
+        }
+      }
+
+      $('#type').bind('change',
+        function() {
+          if ($('#type').val() == 'season') {
+            $('#season').show();
+          }
+          else {
+            $('#season').hide();
+          }
+      });
+
+      var factorDataSource= new RemoteDataSource('/api/rate-factor-defs',{'id':'id','description':'name'});
+      var factorValue = (entity && entity.factor_definition_id)?entity.factor_definition_id:''; 
+      var factorSelector = new SelectSelector('factor_definition[id]', factorDataSource, factorValue, true);   
+
+      var seasonDataSource= new RemoteDataSource('/api/rate-season-defs',{'id':'id','description':'name'});
+      var seasonValue = (entity && entity.season_definition_id)?entity.season_definition_id:''; 
+      var seasonSelector = new SelectSelector('season_definition[id]', seasonDataSource, seasonValue, false);
+
+      this.configValidation();
+    	
+    }
+    
+    this.configValidation = function() {
+           	 
+       	 $('#rate_price_def_management_form').validate({
+       	  	
+            submitHandler: function(form) 
+            {
+               return false;
+            },
+                 	        	   
+       	    rules : { // rules
+       	       'name': {
+       	         required: true	
+       	       },
+               'type' : {
+                 required: true
+               }
+       	    },
+       	    
+       	    messages : { // messages
+       	       'name': {
+       	       	 required : '<%=t.rate_price_def_management.form.name_required%>'
+       	       },
+               'type': {
+                 required: '<%=t.rate_price_def_management.form.type_required%>'
+               }
+       	    }
+       	    
+       	  }
+       	 );
+    	
+    	
+    }
+  	
+  };
+  
+  var urls = { 
+  	           query_url  : '/api/rate-price-defs',
+    	         create_url : '/api/rate-price-def',
+  	           update_url : '/api/rate-price-def',
+  	           delete_url : '/api/rate-price-def',
+  	           get_url    : '/api/rate-price-def'
+  	         };
+  
+  var ratePriceDefHook = new RatePriceDefinitionHook();
+  var ratePriceManagement = new EntityManagement(urls, 'rate-price-def', 
+      <%= rate_price_defs_page_size %>, ratePriceDefHook, {prefix: '/admin/rates'});
+ 
+ });

@@ -1,0 +1,96 @@
+<%= include('entity-management') %>
+
+<!-- Renders the element description -->
+
+<script type="text/tmpl" id="elements_title">
+  <h2 class="entity-title"><%=t.rate_season_management.title%> <%=season_definition.name%></h2>
+</script>
+
+<script type="text/tmpl" id="elements_description">
+    <%= t.rate_season_management.description %>
+</script>
+
+<!-- Renders the elements container -->
+<script type="text/tmpl" id="elements_container_template">
+
+  <table id="elements_table" class="table">
+     <thead class="table-header">
+       <tr>
+         <th class="table-header-title" scope="col" style="width:30%"><%= t.rate_season_management.table.name %></th>
+         <th class="table-header-title" scope="col" style="width:30%"><%= t.rate_season_management.table.from %></th>
+         <th class="table-header-title" scope="col" style="width:30%"><%= t.rate_season_management.table.to %></th>
+       </tr>
+     </thead>
+     <tbody id="elements_tbody" class="table-tbody">             
+     </tbody>
+  </table>
+
+</script>
+
+<!-- Renders one element in the elements list view -->
+        
+<script type="text/tmpl" id="elements_list_template">
+
+    <tr class="table-row" rel="<%%= index %>" id="element_row_<%%=index%>">
+      <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= entity.name %></td>
+      <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= self.formatPadNumber(entity.from_day, 2) %>/<%%= self.formatPadNumber(entity.from_month, 2) %></td>
+      <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= self.formatPadNumber(entity.to_day, 2) %>/<%%= self.formatPadNumber(entity.to_month, 2) %></td>
+    </tr>
+
+</script>
+
+<!-- Renders one element in the element view (full detailed) -->
+
+<script type="text/tmpl" id="element_template">
+
+
+</script>
+
+<!-- Renders the form to edit an element -->
+
+<script type="text/tmpl" id="element_template_form">
+              
+     <form name="element" id="rate_season_management_form">
+        
+        <div class="form-fields">
+        
+          <input type="hidden" id="season_definition[id]" name="season_definition[id]" value="<%=season_definition.id%>"/>
+
+          <%% if (entity) { %>
+          <input type="hidden" id="id" name="id" value="<%%=entity.id%>"/>
+          <%% } %>
+
+          <div class="formrow">
+            <label for="name" class="fieldtitle"><%= t.rate_season_management.form.name %> <span class="mandatoryfield">*</span></label>
+            <input type="text" maxlength="2" id="name" name="name" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.name %>" <%% } %> />
+          </div>
+
+          <div class="formrow">
+            <label for="from" class="fieldtitle"><%= t.rate_season_management.form.from %> <span class="mandatoryfield">*</span></label>
+            <select name="from_month" id="from_month"/>
+            <select name="from_day" id="from_day"/>
+          </div>
+
+          <div class="formrow">
+            <label for="to" class="fieldtitle"><%= t.rate_season_management.form.to %> <span class="mandatoryfield">*</span></label>
+            <select name="to_month" id="to_month"/>
+            <select name="to_day" id="to_day"/>
+          </div>
+
+        </div>
+        
+        <div class="bottom-navigation-bar navigation-bar">
+             <div class="navigation-bar-crud-buttons">
+                <%% if (entity) { %>
+                  <input type="submit" class="update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
+                <%% } 
+                   else { %>
+                  <input type="submit" class="create-entity-button action-button entity-management-button" value="<%=t.entitymanagement.create%>"/>
+                <%% } %>
+             </div>
+        </div>
+     
+     </form>
+     
+
+</script>

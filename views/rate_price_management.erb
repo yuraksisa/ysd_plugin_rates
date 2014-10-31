@@ -1,0 +1,100 @@
+<%= include('entity-management') %>
+
+<!-- Renders the element description -->
+
+<script type="text/tmpl" id="elements_title">
+  <h2 class="entity-title"><%=t.rate_price_management.title%> <%=price_definition.name%></h2>
+</script>
+
+<script type="text/tmpl" id="elements_description">
+    <%= t.rate_price_management.description %>
+</script>
+
+<!-- Renders the elements container -->
+<script type="text/tmpl" id="elements_container_template">
+
+  <table id="elements_table" class="table">
+     <thead class="table-header">
+       <tr>
+         <% if price_definition.type == :season %>
+         <th class="table-header-title" scope="col" style="width:30%"><%= t.rate_price_management.table.season %></th>
+         <% end %>
+         <th class="table-header-title" scope="col" style="width:30%"><%= t.rate_price_management.table.units %></th>
+         <th class="table-header-title" scope="col" style="width:30%"><%= t.rate_price_management.table.price %></th>
+       </tr>
+     </thead>
+     <tbody id="elements_tbody" class="table-tbody">             
+     </tbody>
+  </table>
+
+</script>
+
+<!-- Renders one element in the elements list view -->
+        
+<script type="text/tmpl" id="elements_list_template">
+
+    <tr class="table-row" rel="<%%= index %>" id="element_row_<%%=index%>">
+      <% if price_definition.type == :season %>
+      <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= entity.season? entity.season.name + " <span class=\"less_contrast_text\">(" +  self.formatPadNumber(entity.season.from_month,2) + '/' +  self.formatPadNumber(entity.season.from_day,2) + " - " + self.formatPadNumber(entity.season.to_month,2) + '/' +  self.formatPadNumber(entity.season.to_day, 2) + ")</span>": "" %></td>
+      <% end %>
+      <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= entity.units %></td>
+      <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= new Number(entity.price).toFixed(2) %></td>
+    </tr>
+
+</script>
+
+<!-- Renders one element in the element view (full detailed) -->
+
+<script type="text/tmpl" id="element_template">
+
+
+</script>
+
+<!-- Renders the form to edit an element -->
+
+<script type="text/tmpl" id="element_template_form">
+              
+     <form name="element" id="rate_price_management_form">
+        
+        <div class="form-fields">
+        
+          <input type="hidden" id="price_definition[id]" name="price_definition[id]" value="<%=price_definition.id%>"/>
+
+          <%% if (entity) { %>
+          <input type="hidden" id="id" name="id" value="<%%=entity.id%>"/>
+          <%% } %>
+
+          <% if price_definition.type == :season %>
+          <div class="formrow">
+            <label for="season[id]" class="fieldtitle"><%= t.rate_price_def_management.form.season %></label>
+            <select id="season[id]" name="season[id]"></select>
+          </div>
+          <% end %>
+
+          <div class="formrow">
+            <label for="units" class="fieldtitle"><%= t.rate_price_management.form.units %> <span class="mandatoryfield">*</span></label>
+            <input type="text" maxlength="5" id="units" name="units" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.units).toFixed(2) %>" <%% } %> />
+          </div>
+
+          <div class="formrow">
+            <label for="price" class="fieldtitle"><%= t.rate_price_management.form.price %> <span class="mandatoryfield">*</span></label>
+            <input type="text" maxlength="5" id="price" name="price" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.price).toFixed(2) %>" <%% } %> />
+          </div>
+
+        </div>
+        
+        <div class="bottom-navigation-bar navigation-bar">
+             <div class="navigation-bar-crud-buttons">
+                <%% if (entity) { %>
+                  <input type="submit" class="update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
+                <%% } 
+                   else { %>
+                  <input type="submit" class="create-entity-button action-button entity-management-button" value="<%=t.entitymanagement.create%>"/>
+                <%% } %>
+             </div>
+        </div>
+     
+     </form>
+     
+
+</script>

@@ -1,0 +1,71 @@
+ require(['jquery', 'YSDEntityManagement', 'YSDForms', 'jquery.validate','json2'], function($, EntityManagement, YSDForms) {
+
+ 
+  function RateSeasonHook() {
+ 	   
+    this.entityKey = function(entity) {
+      return entity.id;
+    }
+
+    this.onEdit = function(entity) {
+      $('#name').focus();  	
+      this.configForm(entity);
+    };
+  
+    this.onNew = function() {
+  	  $('#name').focus();
+  	  this.configForm(null);
+    }
+    
+    this.onRenderEntities = function(entities) {
+      $('.elements-search').show();	
+    }
+    
+    this.configForm = function(entity) {
+             
+         this.configValidation();
+    	
+    }
+    
+    this.configValidation = function() {
+           	 
+       	 $('#rate_season_def_management_form').validate({
+       	  	
+            submitHandler: function(form) 
+            {
+               return false;
+            },
+                 	        	   
+       	    rules : { // rules
+       	       'name': {
+       	         required: true	
+       	       }
+       	    },
+       	    
+       	    messages : { // messages
+       	       'name': {
+       	       	 required : '<%=t.rate_season_management.form.name_required%>'
+       	       }
+       	    }
+       	    
+       	  }
+       	 );
+    	
+    	
+    }
+  	
+  };
+  
+  var urls = { 
+  	           query_url  : '/api/rate-season-defs',
+    	         create_url : '/api/rate-season-def',
+  	           update_url : '/api/rate-season-def',
+  	           delete_url : '/api/rate-season-def',
+  	           get_url    : '/api/rate-season-def'
+  	         };
+  
+  var rateSeasonHook = new RateSeasonHook();
+  var reateSeasonManager = new EntityManagement(urls, 'rate-season', 
+      <%= rate_season_defs_page_size %>, rateSeasonHook, {prefix: '/admin/rates'});
+ 
+ });
