@@ -28,7 +28,7 @@ module Sinatra
                             end
               conditions = Conditions::JoinComparison.new('$or', 
                               [Conditions::Comparison.new(:id, '$eq', search_text.to_i),
-                               Conditions::Comparison.new(:name, '$eq', search_text.upcase)])   
+                               Conditions::Comparison.new(:name, '$like', "%#{search_text}%")])   
 
               total = conditions.build_datamapper(::Yito::Model::Rates::SeasonDefinition).all.count 
               data = conditions.build_datamapper(::Yito::Model::Rates::SeasonDefinition).all(:limit => limit, :offset => offset) 
