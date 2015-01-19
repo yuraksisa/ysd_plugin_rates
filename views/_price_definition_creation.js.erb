@@ -1,0 +1,64 @@
+require(['jquery', 'YSDEntityManagementComplementHooks',
+         "YSDRemoteDataSource", "YSDSelectSelector"],
+        function($, EntityManagementComplementHooks,RemoteDataSource, SelectSelector) {
+
+  /* ------------------------------------------------
+     Plugin for price definition creation
+     ------------------------------------------------ */
+  function PriceDefinitionCreationHookPlugin() {
+	
+    this.onNew = function () {
+       this.configForm(null);
+    }
+
+    this.adaptFormData = function(data) {
+            
+      if (data.price_definition.id == '') {
+        if (!data.price_definition.type) {
+          data.price_definition = null;
+        }
+        else {
+          delete data.price_definition.id;
+          data.price_definition.name = data.name;
+          data.price_definition.description = data.name;          
+        }
+      }
+
+      return data;  
+      
+    }
+
+    this.configForm = function(entity) {
+             
+      $('#price_definition\\[type\\]').bind('change',
+        function() {
+          if ($('#price_definition\\[type\\]').val() == 'season') {
+            $('#season').show();
+          }
+          else {
+            $('#season').hide();
+          }
+      });
+
+      $('input[name="price_definition\\[units_management\\]"]').bind('change',
+        function() {
+           if ($(this).val() == 'detailed') {
+             $('#price_definition\\[units_management_value\\]').prop('disabled', false);
+           }
+           else {
+             $('#price_definition\\[units_management_value\\]').prop('disabled', true);
+           }
+        });
+
+      var seasonDataSource= new RemoteDataSource('/api/rate-season-defs',{'id':'id','description':'name'});
+      var seasonValue = (entity && entity.season_definition_id)?entity.season_definition_id:''; 
+      var seasonSelector = new SelectSelector('price_definition[season_definition][id]', seasonDataSource, seasonValue, false);
+      
+    }
+
+  }
+	
+  var priceDefinitionCreationHookPlugin = new PriceDefinitionCreationHookPlugin();
+  EntityManagementComplementHooks.register(priceDefinitionCreationHookPlugin);	
+
+});

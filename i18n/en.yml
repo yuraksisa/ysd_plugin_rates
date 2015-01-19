@@ -82,6 +82,9 @@ rate_price_def_management:
     description: Description
     max_price: Max price
     base_price: Base price
+    price_specification: How do you define the prices?    
+    unitary_price_specification: Just one unit/day price
+    detailed_price_specification: Different prices depending on the number of days/units    
     type: Type
     type_no_season: General price
     type_season: Season price    
@@ -89,6 +92,15 @@ rate_price_def_management:
     season: Temporada
     name_required: Name is required   
     type_required: Type is required
+    units_management_required: Price specification required
+rate_price_assistant:
+  title: Prices
+  price: Price
+  season_units: Season / Units-days
+  season: Season
+  unit: 1 unit/day
+  units: Units-days                
+  no_limit: No limit      
 rate_price_management:
   title: Prices
   description: Prices

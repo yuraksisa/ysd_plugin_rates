@@ -16,6 +16,7 @@
     this.onNew = function() {
   	  $('#name').focus();
   	  this.configForm(null);
+      $('#season').show();
     }
     
     this.onRenderEntities = function(entities) {
@@ -40,6 +41,7 @@
              
       if (entity) {
         $('#type').prop('disabled', 'true');
+        $('input[name="units_management"]').prop('disabled', 'true');
         if (entity.type == 'season') {
           $('#season').show();
         }
@@ -54,6 +56,16 @@
             $('#season').hide();
           }
       });
+
+      $('input[name="units_management"]').bind('change',
+        function() {
+           if ($(this).val() == 'detailed') {
+             $('select[name="units_management_value"]').prop('disabled', false);
+           }
+           else {
+             $('select[name="units_management_value"]').prop('disabled', true);
+           }
+        });
 
       var factorDataSource= new RemoteDataSource('/api/rate-factor-defs',{'id':'id','description':'name'});
       var factorValue = (entity && entity.factor_definition_id)?entity.factor_definition_id:''; 
@@ -82,6 +94,9 @@
        	       },
                'type' : {
                  required: true
+               },
+               'units_management': {
+                 required: true
                }
        	    },
        	    
@@ -91,6 +106,9 @@
        	       },
                'type': {
                  required: '<%=t.rate_price_def_management.form.type_required%>'
+               },
+               'units_management': {
+                 required: '<%=t.rate_price_def_management.form.units_management_required%>'
                }
        	    }
        	    

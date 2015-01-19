@@ -1,0 +1,84 @@
+ratePriceAssistantModel = {
+
+  updatePrice: function(id, value) {
+
+       var json_request = JSON.stringify({id: parseInt(id), price: parseFloat(value)});
+
+       $.ajax({
+               type: 'PUT',
+               data : json_request,
+               url : '/api/rate-price',
+               success: function(data, textStatus, jqXHR) {
+               },
+               error: function(data, textStatus, jqXHR) {
+                 alert('Error updating price');
+               }
+           });
+
+  },
+
+  createPrice: function(priceDefinitionId, seasonId, units, value) {
+
+       var json_request = JSON.stringify({price_definition: {id: parseInt(priceDefinitionId)},
+                                          season: {id: parseInt(seasonId)}, 
+                                          units: parseInt(units),
+                                          price: parseFloat(value)});
+
+       $.ajax({
+               type: 'POST',
+               data : json_request,
+               url : '/api/rate-price',
+               success: function(data, textStatus, jqXHR) {
+                 var id=priceDefinitionId+'-'+seasonId+'-'+units;
+                 $('#'+id).replaceWith(
+                  '<form name="update_price" id="' + id + '">'+
+                    '<input type="text" size="5" maxlenght="10" name="' + data.id + '" value="' + value + '" class="price_update right_text">'+
+                  '</form>');
+                 $('#'+id + "> .price_update").bind('change', function() {
+                    ratePriceAssistantController.priceChanged($(this));  
+                 });
+               },
+               error: function(data, textStatus, jqXHR) {
+                 alert('Error creating price');
+               }
+           });
+
+  }
+
+};
+
+ratePriceAssistantController = {
+
+  priceChanged: function(control) {
+  	 if (control[0].form.name == 'create_price') {
+       ratePriceAssistantModel.createPrice($(control[0].form['price_definition_id']).val(),
+                                           $(control[0].form['season_id']).val(),
+                                           $(control[0].form['units']).val(), 
+                                           control[0].value);
+  	 }
+  	 else 
+  	 	if (control[0].form.name = 'update_price') {
+        ratePriceAssistantModel.updatePrice(control[0].name, 
+                                            control[0].value);
+  	 	}
+  }
+
+};
+
+ratePriceAssistantView = {
+
+  init: function() {
+
+    $('.price_update').bind('change', function() {
+      ratePriceAssistantController.priceChanged($(this));  
+    });
+
+    $('.price_create').bind('change', function() {
+      ratePriceAssistantController.priceChanged($(this));  
+    });
+
+  }
+
+};
+
+ratePriceAssistantView.init();

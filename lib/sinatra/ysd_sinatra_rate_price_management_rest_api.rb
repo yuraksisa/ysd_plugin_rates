@@ -74,7 +74,12 @@ module Sinatra
                               
           if data = ::Yito::Model::Rates::Price.get(data_request.delete(:id).to_i)     
             data.attributes=data_request  
-            data.save
+            begin
+              data.save
+            rescue DataMapper::SaveFailureError => error
+             p "Error saving price #{error} #{data.inspect} #{data.errors.inspect}"
+             raise error 
+            end            
           end
       
           content_type :json

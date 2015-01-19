@@ -36,7 +36,7 @@
       <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= entity.id %></td>
       <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= entity.name %></td>
       <td class="table-cell element-navigation-detail" rel="<%%= index %>"><%%= entity.description %></td>
-      <td class="table-cell"><a href="/admin/rates/prices/<%%=entity.id%>"><%=t.rate_price_def_management.table.prices%></a></td>    
+      <td class="table-cell"><div class="form-button"><a href="/admin/rates/prices/<%%=entity.id%>"><%=t.rate_price_def_management.table.prices%></a></div></td>    
     </tr>
 
 </script>
@@ -60,6 +60,8 @@
           <input type="hidden" id="id" name="id" value="<%%=entity.id%>"/>
           <%% } %>
 
+          <div class="grid_6">
+
           <div class="formrow">
             <label for="name" class="fieldtitle"><%= t.rate_price_def_management.form.name %> <span class="mandatoryfield">*</span></label>
             <input type="text" maxlength="80" id="name" name="name" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.name %>" <%% } %> />
@@ -80,6 +82,10 @@
             <input type="text" maxlength="10" id="max_price" name="max_price" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.max_price).toFixed(2) || 0%>" <%% } else { %> value="0" <%% } %> />
           </div>
 
+          </div>
+
+          <div class="grid_6">
+          <div class="left-margin">
           <div class="formrow">
             <label for="type" class="fieldtitle"><%= t.rate_price_def_management.form.type %> <span class="mandatoryfield">*</span></label>
             <select id="type" name="type">
@@ -88,14 +94,35 @@
             </select>
           </div>
  
-          <div id="season" class="formrow" style="display:none">
+          <div id="season" class="formrow bottom-space" style="display:none">
             <label for="season_definition[id]" class="fieldtitle"><%= t.rate_price_def_management.form.season %> <span class="mandatoryfield">*</span></label>            
             <select id="season_definition[id]" name="season_definition[id]"/>
           </div>
 
           <div class="formrow">
+            <label for="units_management" class="fieldtitle"><%= t.rate_price_def_management.form.price_specification %></label>
+            <div class="fieldcontrol">
+              <input type="radio" name="units_management" value="unitary" <%% if (entity && entity.units_management =="unitary"){%>checked="true"<%%}%>><%= t.rate_price_def_management.form.unitary_price_specification %></input>
+            </div>
+            <div class="fieldcontrol">
+              <input type="radio" name="units_management" value="detailed" <%% if (entity && entity.units_management =="detailed"){%>checked="true"<%%}%>><%= t.rate_price_def_management.form.detailed_price_specification %>              
+                <select id="units_management_value" name="units_management_value" disabled="disabled">
+                  <option value="2" <%%if (entity && entity.units_management_value == 2) {%>selected="selected"<%%}%>>2</option>
+                  <option value="3" <%%if (entity && entity.units_management_value == 3) {%>selected="selected"<%%}%>>3</option>
+                  <option value="4" <%%if (entity && entity.units_management_value == 4) {%>selected="selected"<%%}%>>4</option>
+                  <option value="5" <%%if (entity && entity.units_management_value == 5) {%>selected="selected"<%%}%>>5</option>
+                  <option value="6" <%%if (entity && entity.units_management_value == 6) {%>selected="selected"<%%}%>>6</option>
+                  <option value="7" <%%if (entity && entity.units_management_value == 7) {%>selected="selected"<%%}%>>7</option>                                    
+                </select> 
+              </input>
+            </div>
+          </div>
+
+          <div class="formrow bottom-space">
             <label for="factor_definition[id]" class="fieldtitle"><%= t.rate_price_def_management.form.factor %></label>
             <select id="factor_definition[id]" name="factor_definition[id]"></select>
+          </div>
+          </div>
           </div>
 
         </div>

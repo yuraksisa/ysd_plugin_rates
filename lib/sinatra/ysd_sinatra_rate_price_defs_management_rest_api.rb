@@ -31,9 +31,9 @@ module Sinatra
                                Conditions::Comparison.new(:name, '$like', "%#{search_text}%")])   
 
               total = conditions.build_datamapper(::Yito::Model::Rates::PriceDefinition).all.count 
-              data = conditions.build_datamapper(::Yito::Model::Rates::PriceDefinition).all(:limit => limit, :offset => offset) 
+              data = conditions.build_datamapper(::Yito::Model::Rates::PriceDefinition).all(:limit => limit, :offset => offset, :order => [:name.asc]) 
             else
-              data  = ::Yito::Model::Rates::PriceDefinition.all(:limit => limit, :offset => offset)
+              data  = ::Yito::Model::Rates::PriceDefinition.all(:limit => limit, :offset => offset, :order => [:name.asc])
               total = ::Yito::Model::Rates::PriceDefinition.count
                                           
             end

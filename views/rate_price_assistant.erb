@@ -1,0 +1,97 @@
+<%= partial(:rate_assistant_header, :locals => {:price_definition => price_definition}) %>
+
+<% if price_definition.units_management == :unitary %>
+
+  <% if price_definition.season_definition %>
+
+    <% rows = 3 %>
+    <% items_in_column = price_definition.season_definition.seasons.size / 3%>
+    <% data = price_definition.season_definition.seasons.each_slice(items_in_column).to_a %>
+
+    <div class="container_12">
+    <% data.each do |sublist| %>
+    <div class="grid_4">
+    <table id="elements_table" class="table smaller_text">
+      <thead class="table-header">
+        <tr>
+          <th class="table-header-title left_text" scope="col" style="width:50%"><%=t.rate_price_assistant.season%></th>
+          <th class="table-header-title centered_text" scope="col" style="width:50%"><%=t.rate_price_assistant.unit%></th>
+        </tr>
+      </thead>
+      <tbody class="table-tbody">  
+        <% sublist.each do |season| %> 
+          <tr class="table-row"> 
+            <td class="table-cell">
+              <%= season.name %> &nbsp; <span class="less_contrast_text"><%= season.to_s %></span>
+            </td>
+            <td class="table-cell centered_text">
+              <span class="less_contrast_text">
+                <% if prices[season.id][1] %>  
+                  <form name="update_price">
+                    <input type="text" size="5" maxlenght="10" name="<%=prices[season.id][1][:id]%>" value='<%="%.2f" % prices[season.id][1][:price]%>' class="price_update right_text">
+                  </form>
+                <% else %>
+                  <form name="create_price" id="<%="#{price_definition.id}-#{season.id}-1"%>">
+                    <input type="hidden" name="season_id" value="<%=season.id%>"/>
+                    <input type="hidden" name="units" value="1"/>
+                    <input type="hidden" name="price_definition_id" value="<%=price_definition.id%>"/>
+                    <input type="text" size="5" maxlenght="10" name="price" value="0.00" class="price_create right_text"/>
+                  </form>
+                <% end %>
+              </span>
+            </td>
+          </tr>               
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+    <% end %>
+    </div>
+  <% end %>
+
+<% else %>
+
+<table id="elements_table" class="table smaller_text">
+  <thead class="table-header">
+    <tr>
+      <th class="table-header-title left_text" scope="col" style="width:20%"><%=t.rate_price_assistant.season_units%></th>
+      <% item_width = 80 / (price_definition.units_management_value + 1) %>
+      <% (1..price_definition.units_management_value).each do |item| %>
+        <th class="table-header-title centered_text" scope="col" style="width:<%=item_width%>%"><%=item%></th>
+      <% end %>
+        <th class="table-header-title centered_text" scope="col" style="widht:<%=item_width%>%">Extra</th>
+    </tr>
+  </thead>
+  <tbody class="table-tbody">  
+    <% if price_definition.season_definition %>
+      <% price_definition.season_definition.seasons.each do |season| %> 
+        <tr class="table-row"> 
+          <td class="table-cell">
+           	<%= season.name %> &nbsp; <span class="less_contrast_text"><%= season.to_s %></span>
+          </td>
+          <% max=price_definition.units_management == :unitary ? 1 : price_definition.units_management_value+1%>
+          <% (1..max).each do |item| %>
+            <% item = item<=price_definition.units_management_value ? item : 0 %>
+            <td class="table-cell centered_text">
+              <span class="less_contrast_text">
+                <% if prices[season.id][item] %>	
+                  <form name="update_price">
+                    <input type="text" size="5" maxlenght="10" name="<%=prices[season.id][item][:id]%>" value='<%="%.2f" % prices[season.id][item][:price]%>' class="price_update right_text">
+                  </form>
+                <% else %>
+                  <form name="create_price" id="<%="#{price_definition.id}-#{season.id}-#{item}"%>">
+                    <input type="hidden" name="season_id" value="<%=season.id%>"/>
+                    <input type="hidden" name="units" value="<%=item%>"/>
+                    <input type="hidden" name="price_definition_id" value="<%=price_definition.id%>"/>
+                    <input type="text" size="5" maxlenght="10" name="price" value="0.00" class="price_create right_text"/>
+                  </form>
+                <% end %>
+              </span>
+            </td>
+          <% end %>
+        </tr>               
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
