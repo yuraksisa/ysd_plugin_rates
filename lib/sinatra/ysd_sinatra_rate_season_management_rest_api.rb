@@ -14,8 +14,8 @@ module Sinatra
           app.post path do
 
             page = params[:page].to_i || 1
-            limit = settings.contents_page_size
-            offset = (page-1) * settings.contents_page_size
+            limit = 50
+            offset = (page-1) * 50
 
             data  = ::Yito::Model::Rates::Season.all(:season_definition_id => params[:season_def_id], :limit => limit, :offset => offset, :order => [:from_month.asc, :from_day.asc])
             total = ::Yito::Model::Rates::Season.count
