@@ -74,12 +74,12 @@
 
           <div class="formrow">
             <label for="base_price" class="fieldtitle"><%= t.rate_price_def_management.form.base_price %></label>
-            <input type="text" maxlength="10" id="base_price" name="base_price" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.base_price).toFixed(2) || 0%>" <%% } else { %> value="0" <%% } %> />
+            <input type="text" maxlength="10" id="base_price" name="base_price" class="fieldcontrol price" <%% if (entity) { %> value="<%%= new Number(entity.base_price).toFixed(2) || 0%>" <%% } else { %> value="0" <%% } %> />
           </div>
           
           <div class="formrow">
             <label for="max_price" class="fieldtitle"><%= t.rate_price_def_management.form.max_price %></label>
-            <input type="text" maxlength="10" id="max_price" name="max_price" class="fieldcontrol" <%% if (entity) { %> value="<%%= new Number(entity.max_price).toFixed(2) || 0%>" <%% } else { %> value="0" <%% } %> />
+            <input type="text" maxlength="10" id="max_price" name="max_price" class="fieldcontrol price" <%% if (entity) { %> value="<%%= new Number(entity.max_price).toFixed(2) || 0%>" <%% } else { %> value="0" <%% } %> />
           </div>
 
           </div>
