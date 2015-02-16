@@ -23,15 +23,15 @@ rate_season_def_management:
     id: Id
     name: Nom
     description: Descripció
-    seasons: Gestionar temporades    
+    seasons: Temporades    
   form:
     name: Nom
     description: Descripció
     value: Valor
     name_required: Nom obligatori
 rate_season_management:
-  title: Llista temporaades
-  description: Llista temporaades
+  title: Temporades
+  description: Llista temporades
   table:
     id: Id
     name: Nom
@@ -76,7 +76,7 @@ rate_price_def_management:
     id: Id
     name: Nom
     description: Descripció
-    prices: Gestionar preus
+    prices: Preus
   form:
     name: Nom
     description: Descripció

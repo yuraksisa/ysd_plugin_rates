@@ -1,5 +1,5 @@
 <%= partial(:rate_assistant_header, :locals => {:price_definition => price_definition}) %>
-
+<div id="page_wrapper" class="all-space">
 <% if price_definition.units_management == :unitary %>
 
   <% if price_definition.season_definition %>
@@ -95,3 +95,4 @@
   </tbody>
 </table>
 <% end %>
+</div>

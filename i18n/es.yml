@@ -23,14 +23,14 @@ rate_season_def_management:
     id: Id
     name: Nombre
     description: Descripción
-    seasons: Gestionar temporadas
+    seasons: Temporadas
   form:
     name: Nombre
     description: Descripción
     value: Valor
     name_required: Nombre obligatorio    
 rate_season_management:
-  title: Lista de temporadas
+  title: Temporadas
   description: Lista de las temporadas
   table:
     id: Id
@@ -76,7 +76,7 @@ rate_price_def_management:
     id: Id
     name: Nombre
     description: Descripción
-    prices: Gestión de precios    
+    prices: Precios    
   form:
     name: Nombre
     description: Descripción

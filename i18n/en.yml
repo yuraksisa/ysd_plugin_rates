@@ -23,15 +23,15 @@ rate_season_def_management:
     id: Id
     name: Name
     description: description
-    seasons: Manage seasons    
+    seasons: Seasons    
   form:
     name: Name
     description: Description
     value: Value
     name_required: Name is required
 rate_season_management:
-  title: Seasons list
-  description: Seasons list
+  title: Seasons
+  description: Seasons
   table:
     id: Id
     name: Name
@@ -76,7 +76,7 @@ rate_price_def_management:
     id: Id
     name: Name
     description: Description
-    prices: Prices management    
+    prices: Prices   
   form:
     name: Name
     description: Description
