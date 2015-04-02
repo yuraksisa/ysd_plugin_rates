@@ -5,20 +5,6 @@ module Sinatra
 
       def self.registered(app)
 
-        #
-        # Prices page
-        #
-        #app.get '/admin/rates/prices/:price_def_id/?*', :allowed_usergroups => ['rates_manager','staff'] do 
-        #
-        #  if price_definition = ::Yito::Model::Rates::PriceDefinition.get(params[:price_def_id])
-        #    locals = {:rate_price_page_size => 20, :price_definition => price_definition}
-        #    load_em_page :rate_price_management, nil, false, :locals => locals
-        #  else
-        #    status 404
-        #  end
-        #
-        #end
-
         app.get '/admin/rates/prices/:price_def_id/?*', :allowed_usergroups => ['rates_manager','staff'] do 
 
           if price_definition = ::Yito::Model::Rates::PriceDefinition.get(params[:price_def_id])
@@ -49,6 +35,12 @@ module Sinatra
             status 404
           end
         
+
+        end
+
+        app.get '/admin/rates/adjust-prices/?*', :allowed_usergroups => ['rates_manager','staff'] do 
+
+          load_page(:adjust_prices)
 
         end
 

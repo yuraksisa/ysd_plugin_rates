@@ -5,8 +5,15 @@
   <% if price_definition.season_definition %>
 
     <% rows = 3 %>
-    <% items_in_column = price_definition.season_definition.seasons.size / 3%>
-    <% data = price_definition.season_definition.seasons.each_slice(items_in_column).to_a %>
+    <% item_count = price_definition.season_definition.seasons.size %>
+    <% if item_count >= 3 
+         items_in_column = item_count / 3
+         data = price_definition.season_definition.seasons.each_slice(items_in_column).to_a 
+       else
+         items_in_column = item_count
+         data = [price_definition.season_definition.seasons]
+       end
+    %>
 
     <div class="container_12">
     <% data.each do |sublist| %>

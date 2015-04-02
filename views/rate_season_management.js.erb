@@ -45,7 +45,7 @@
       var fromMonthselect = new SelectSelector('from_month', monthsDataSource, fromMonthValue);
 
       var toDayValue = (entity && entity.to_day)?entity.to_day:0;
-      var toDayselect = new SelectSelector('to_day', daysDataSource, fromDayValue);
+      var toDayselect = new SelectSelector('to_day', daysDataSource, toDayValue);
       var toMonthValue = (entity && entity.to_month)?entity.to_month:0;
       var toMonthselect = new SelectSelector('to_month', monthsDataSource, toMonthValue);
 

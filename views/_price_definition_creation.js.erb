@@ -13,7 +13,7 @@ require(['jquery', 'YSDEntityManagementComplementHooks',
 
     this.adaptFormData = function(data) {
             
-      if (data.price_definition.id == '') {
+      if (data.price_definition && data.price_definition.id == '') {
         if (!data.price_definition.type) {
           data.price_definition = null;
         }

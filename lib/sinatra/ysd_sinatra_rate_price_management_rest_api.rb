@@ -105,6 +105,14 @@ module Sinatra
         
         end
 
+        #
+        # Massive price update
+        #
+        app.post '/api/rate-price-masive-update', :allowed_usergroups => ['rates_manager','staff'] do
+
+
+        end 
+
       end
     end
   end

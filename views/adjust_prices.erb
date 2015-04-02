@@ -1,0 +1,42 @@
+<div class="top-navigation-bar">
+  <h2 class="entity-title">Modificación masiva de precios</h2>
+</div>
+<div id="page_wrapper" class="all-space">
+  <form name="adjust_prices" id="adjust_prices">
+  	<div class="">
+  	   <div class="formrow">
+  	     <label for="type" class="fieldtitle">Tipo de modificación</label>
+  	     <select name="type" id="type" class="fieldcontrol">
+            <option value="factor" selected="selected">Aplicar factor</option>
+            <option value="amount">Sumar/restar importe</option>
+  	     </select>
+  	   </div>	
+  	   <div id="factor_container" class="formrow">	
+  	   	 <label for="factor" class="fieldtitle">Factor</label>
+         <input type="text" name="factor" id="factor" class="fieldcontrol" placeholder="Introduzca el factor multiplicativo"/>
+       </div>
+  	   <div id="amount_container" class="formrow" style="display:none">	
+  	   	 <label for="amount" class="fieldtitle">Importe</label>
+  	   	 <select id="amount_operation" name="amount_operation" class="fieldcontrol">
+            <option value="+" selected="selected">Sumar</option>
+            <option value="-">Restar</option>
+  	   	 </select>
+         <input type="text" name="amount" id="amount" class="fieldcontrol" placeholder="Introduzca el importe"/>
+       </div>       
+  	</div>
+  	<div class="container_12">
+      <div class="grid_6">
+        <h3>Temporadas</h3>
+        <select name="season_def" id="season_def"></select>
+        <div id="seasons"></div>
+      </div>
+      <div class="grid_6">
+  	    <h3>Tarifas</h3>
+        <div id="price_def"></div>
+      </div>
+    </div>
+    <div class="top-margin">
+      <input id="process_btn" type="button" class="form-button blue-button" value="Procesar" style="width:100%"</>
+    </div>
+  </form>
+</div>	

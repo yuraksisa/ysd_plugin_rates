@@ -1,0 +1,66 @@
+require(['YSDRemoteDataSource', 'YSDListSelector', 'YSDSelectSelector','jquery','jquery.formparams', 'autonumeric'],
+        function(RemoteDataSource, ListSelector, SelectSelector, $) {
+  adjustPricesModel = {
+    process: function() {
+    	var data = $('#adjust_prices').formParams(false);
+    	alert(data);
+    }
+  };
+  adjustPricesController = {
+
+    typeChanged: function(value) {
+           if (value == 'factor') {
+           	 $('#factor_container').show();
+           	 $('#amount_container').hide();
+           }
+           else {
+           	 $('#factor_container').hide();
+           	 $('#amount_container').show();           	
+           }
+    },
+
+    seasonDefChanged: function(value) {
+
+           var seasonsDataSource = new RemoteDataSource('/api/rate-seasons/'+value,{id:'id', 
+           	  description: function(data) { return data.name + " (" + data.from_day + '/' + data.from_month + ' - ' + data.to_day + '/' + data.to_month + ")" } });
+           var seasonsValue = []; 
+           var seasonsSelector = new ListSelector('seasons', 'seasons[]', seasonsDataSource, seasonsValue );
+
+    },
+
+    processBtnClick: function() {
+    	adjustPricesModel.process();
+    }
+
+  };
+  adjustPricesView = {
+
+     init: function() {
+
+         // Configure the select
+         var seasonDefDataSource = new RemoteDataSource('/api/rate-season-defs',{'id':'id','description':'name'});
+         var seasonDefValue = null; 
+         var seasonDefSelector = new SelectSelector('season_def', seasonDefDataSource, seasonDefValue, true );   
+
+         // Configure the products
+         var productsDataSource = new RemoteDataSource('/api/rate-price-defs',{id:'id', description:'name'});
+         var productsValue = []; 
+         var productsSelector = new ListSelector('price_def', 'price_def[]', productsDataSource, productsValue );
+   
+         $('#type').bind('change', function() {
+           adjustPricesController.typeChanged($(this).val());
+         });
+
+         $('#season_def').bind('change', function() {
+         	adjustPricesController.seasonDefChanged($(this).val());
+         });
+
+         $('#process_btn').bind('click', function() {
+         	adjustPricesController.processBtnClick();
+         })
+
+     }
+
+  }
+  adjustPricesView.init();
+});
