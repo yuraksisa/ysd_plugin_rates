@@ -14,6 +14,8 @@ module Sinatra
                   prices[price.units] = {} 
                   prices[price.units][:id] = price.id
                   prices[price.units][:price] = price.price
+                  prices[price.units][:adjust_operation] = price.adjust_operation
+                  prices[price.units][:adjust_amount] = price.adjust_amount
               end
               locals = {:price_definition => price_definition, :prices => prices}
               load_page :rate_price_assistant_no_season, :locals => locals
@@ -26,6 +28,8 @@ module Sinatra
                   prices[price.season.id][price.units] = {} if prices[price.season.id][price.units].nil?
                   prices[price.season.id][price.units][:id] = price.id
                   prices[price.season.id][price.units][:price] = price.price
+                  prices[price.season.id][price.units][:adjust_operation] = price.adjust_operation
+                  prices[price.season.id][price.units][:adjust_amount] = price.adjust_amount                  
                 end
               end
               locals = {:price_definition => price_definition, :prices => prices}

@@ -110,6 +110,32 @@ module Sinatra
         #
         app.post '/api/rate-price-masive-update', :allowed_usergroups => ['rates_manager','staff'] do
 
+          request.body.rewind
+          data = JSON.parse(URI.unescape(request.body.read)) 
+          data.symbolize_keys! 
+
+          seasons = data[:seasons]
+          price_definitions = data[:price_def]
+          amount_operation = data[:amount_operation]
+          amount = BigDecimal.new(data[:amount])
+
+          if seasons.is_a?Array and seasons.size > 0 and
+             price_definitions.is_a?Array and price_definitions.size > 0 and
+             ['*','+','-','/',' '].index(amount_operation) >= 0 and
+             amount.is_a?BigDecimal
+       
+            ::Yito::Model::Rates::Price.all(
+               :season => {:id => seasons}, 
+               :price_definition => {:id => price_definitions})
+               .update(:adjust_operation => amount_operation,
+                       :adjust_amount => amount)
+
+            content_type :json
+            true.to_json
+       
+          else
+            status 500
+          end
 
         end 
 

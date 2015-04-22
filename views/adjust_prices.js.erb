@@ -1,22 +1,41 @@
-require(['YSDRemoteDataSource', 'YSDListSelector', 'YSDSelectSelector','jquery','jquery.formparams', 'autonumeric'],
-        function(RemoteDataSource, ListSelector, SelectSelector, $) {
-  adjustPricesModel = {
+require(['YSDRemoteDataSource', 'YSDListSelector', 'YSDSelectSelector', 'YSDForms',
+         'jquery','jquery.formparams', 'autonumeric'],
+        function(RemoteDataSource, ListSelector, SelectSelector, YsdForms, $) {
+  adjustPricesModel = {    
     process: function() {
     	var data = $('#adjust_prices').formParams(false);
-    	alert(data);
+      if (!data.seasons || data.seasons.length == 0) {
+        alert('<%=t.adjust_prices.no_seasons_selected%>');
+        return;
+      }
+      if (data.price_def.length == 0) {
+        alert('<%=t.adjust_prices.no_prices_selected%>');
+        return;
+      }
+      var jsonRequest = JSON.stringify(data);
+      $.ajax({
+               type: 'POST',
+               data : jsonRequest,
+               url : '/api/rate-price-masive-update',
+               success: function(data, textStatus, jqXHR) {
+                  YsdForms.showAlert('done', 'success');
+               },
+               error: function(data, textStatus, jqXHR) {
+                  YsdForms.showAlert(textStatus, 'error');
+               }
+      });
     }
   };
   adjustPricesController = {
 
-    typeChanged: function(value) {
-           if (value == 'factor') {
-           	 $('#factor_container').show();
-           	 $('#amount_container').hide();
-           }
-           else {
-           	 $('#factor_container').hide();
-           	 $('#amount_container').show();           	
-           }
+    amountOperationChanged: function(value) {
+        if (value == ' ') {
+          $('#amount').val("0");
+          $('#amount').attr("readonly",true);
+        }
+        else {
+          $('#amount').attr("readonly", false);
+        }
     },
 
     seasonDefChanged: function(value) {
@@ -47,8 +66,10 @@ require(['YSDRemoteDataSource', 'YSDListSelector', 'YSDSelectSelector','jquery',
          var productsValue = []; 
          var productsSelector = new ListSelector('price_def', 'price_def[]', productsDataSource, productsValue );
    
-         $('#type').bind('change', function() {
-           adjustPricesController.typeChanged($(this).val());
+         $('#amount').autoNumeric('init',{aSep:''});
+
+         $('#amount_operation').bind('change', function() {
+          adjustPricesController.amountOperationChanged($(this).val());
          });
 
          $('#season_def').bind('change', function() {

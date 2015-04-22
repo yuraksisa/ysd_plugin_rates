@@ -11,6 +11,9 @@ months:
   october: Octubre
   november: Noviembre
   december: Diciembre
+adjust_prices:
+  no_seasons_selected: No ha seleccionado ninguna temporada
+  no_prices_selected: No ha seleccionado ningún precio
 rates_console:
   title: Tarifas
   seasons: Temporadas

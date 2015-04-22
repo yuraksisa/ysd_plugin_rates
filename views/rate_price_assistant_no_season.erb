@@ -7,6 +7,12 @@
       <form name="update_price">
       	 <label for="<%=prices[1][:id]%>" class="right-margin"><%=t.rate_price_assistant.unit%></label>
          <input type="text" size="5" maxlenght="10" name="<%=prices[1][:id]%>" value='<%="%.2f" % prices[1][:price]%>' class="price_update right_text">
+         <% unless prices[1][:adjust_operation] == ' '%>
+         <span class="smaller_text">
+            <%=prices[1][:adjust_operation]%>
+            <%="%.2f" % prices[1][:adjust_amount]%>
+         </span>
+         <% end %>         
       </form>
    <% else %>
       <form name="create_price" id="<%="#{price_definition.id}-1"%>">

@@ -1,27 +1,21 @@
 <div class="top-navigation-bar">
   <h2 class="entity-title">Modificación masiva de precios</h2>
 </div>
+<div data-alerts="alerts" data-titles="{'success':'<%=t.entitymanagement.success%>','warning':'<%=t.entitymanagement.warning%>','error':'<%=t.entitymanagement.error%>'}" data-fade="10000">
+</div>
 <div id="page_wrapper" class="all-space">
   <form name="adjust_prices" id="adjust_prices">
   	<div class="">
-  	   <div class="formrow">
-  	     <label for="type" class="fieldtitle">Tipo de modificación</label>
-  	     <select name="type" id="type" class="fieldcontrol">
-            <option value="factor" selected="selected">Aplicar factor</option>
-            <option value="amount">Sumar/restar importe</option>
-  	     </select>
-  	   </div>	
-  	   <div id="factor_container" class="formrow">	
-  	   	 <label for="factor" class="fieldtitle">Factor</label>
-         <input type="text" name="factor" id="factor" class="fieldcontrol" placeholder="Introduzca el factor multiplicativo"/>
-       </div>
-  	   <div id="amount_container" class="formrow" style="display:none">	
+  	   <div id="amount_container" class="formrow">	
   	   	 <label for="amount" class="fieldtitle">Importe</label>
   	   	 <select id="amount_operation" name="amount_operation" class="fieldcontrol">
-            <option value="+" selected="selected">Sumar</option>
+            <option value="*" selected="selected">Multiplicar</option>
+            <option value="+">Sumar</option>
             <option value="-">Restar</option>
+            <option value="/">Dividir</option>
+            <option value=" ">Reset</option>            
   	   	 </select>
-         <input type="text" name="amount" id="amount" class="fieldcontrol" placeholder="Introduzca el importe"/>
+         <input type="text" name="amount" id="amount" placeholder="Introduzca el importe"/>
        </div>       
   	</div>
   	<div class="container_12">

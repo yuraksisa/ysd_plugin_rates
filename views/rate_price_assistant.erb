@@ -36,6 +36,12 @@
                 <% if prices[season.id][1] %>  
                   <form name="update_price">
                     <input type="text" size="5" maxlenght="10" name="<%=prices[season.id][1][:id]%>" value='<%="%.2f" % prices[season.id][1][:price]%>' class="price_update right_text">
+                    <% unless prices[season.id][1][:adjust_operation] == ' '%>
+                    <span class="smaller_text">
+                      <%=prices[season.id][1][:adjust_operation]%>
+                      <%="%.2f" % prices[season.id][1][:adjust_amount]%>
+                    </span>
+                    <% end %>
                   </form>
                 <% else %>
                   <form name="create_price" id="<%="#{price_definition.id}-#{season.id}-1"%>">
