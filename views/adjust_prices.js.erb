@@ -28,6 +28,17 @@ require(['YSDRemoteDataSource', 'YSDListSelector', 'YSDSelectSelector', 'YSDForm
   };
   adjustPricesController = {
 
+    typeChanged: function(value) {
+        if (value == 'direct') {
+          $("#amount_operation option[value=' ']").remove();
+          $('#amount').val('');
+          $('#amount').attr("readonly", false);          
+        }
+        else {
+          $("#amount_operation").append('<option value=" ">Reset</option>');
+        }
+    },
+
     amountOperationChanged: function(value) {
         if (value == ' ') {
           $('#amount').val("0");
@@ -67,6 +78,10 @@ require(['YSDRemoteDataSource', 'YSDListSelector', 'YSDSelectSelector', 'YSDForm
          var productsSelector = new ListSelector('price_def', 'price_def[]', productsDataSource, productsValue );
    
          $('#amount').autoNumeric('init',{aSep:''});
+
+         $('input[name="type"]').bind('change', function() {
+           adjustPricesController.typeChanged($(this).val());
+         });
 
          $('#amount_operation').bind('change', function() {
           adjustPricesController.amountOperationChanged($(this).val());

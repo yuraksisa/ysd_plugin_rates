@@ -114,6 +114,7 @@ module Sinatra
           data = JSON.parse(URI.unescape(request.body.read)) 
           data.symbolize_keys! 
 
+          type = data[:type]
           seasons = data[:seasons]
           price_definitions = data[:price_def]
           amount_operation = data[:amount_operation]
@@ -121,14 +122,29 @@ module Sinatra
 
           if seasons.is_a?Array and seasons.size > 0 and
              price_definitions.is_a?Array and price_definitions.size > 0 and
+             ['direct','adjust'].index(type) >= 0 and
              ['*','+','-','/',' '].index(amount_operation) >= 0 and
              amount.is_a?BigDecimal
        
-            ::Yito::Model::Rates::Price.all(
-               :season => {:id => seasons}, 
-               :price_definition => {:id => price_definitions})
-               .update(:adjust_operation => amount_operation,
-                       :adjust_amount => amount)
+            if type == 'adjust'
+              ::Yito::Model::Rates::Price.all(
+                 :season => {:id => seasons}, 
+                 :price_definition => {:id => price_definitions})
+                 .update(:adjust_operation => amount_operation,
+                         :adjust_amount => amount)
+            else
+              ::Yito::Model::Rates::Price.all(
+                 :season => {:id => seasons}, 
+                 :price_definition => {:id => price_definitions}).each do |price|
+                 case amount_operation
+                   when '+' then price.price = price.price + amount 
+                   when '-' then price.price = price.price - amount 
+                   when '*' then price.price = price.price * amount 
+                   when '/' then price.price = price.price / amount 
+                 end
+                 price.save  
+              end
+            end
 
             content_type :json
             true.to_json

@@ -5,9 +5,16 @@
 </div>
 <div id="page_wrapper" class="all-space">
   <form name="adjust_prices" id="adjust_prices">
-  	<div class="">
+  	<div>
+       <h3>Tipo de ajuste</h3>
+       <div class="formrow">
+         <input type="radio" name="type" value="direct">Modifica el precio directamente</input>
+       </div>
+       <div class="formrow">
+         <input type="radio" name="type" value="adjust" checked="checked">No modifica el precio directamente (cuando desea que la modificación pueda deshacerse fácilmente con la opción de reset)</input>
+       </div>
   	   <div id="amount_container" class="formrow">	
-  	   	 <label for="amount" class="fieldtitle">Importe</label>
+  	   	 <h3>Importe</h3>
   	   	 <select id="amount_operation" name="amount_operation" class="fieldcontrol">
             <option value="*" selected="selected">Multiplicar</option>
             <option value="+">Sumar</option>
