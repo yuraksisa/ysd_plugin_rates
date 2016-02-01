@@ -20,7 +20,7 @@ rates_console:
   factors: Factores
   rates: Precios
 rate_season_def_management:
-  title: Definición de temporadas
+  title: Temporadas
   description: Definición de temporadas
   table:
     id: Id
