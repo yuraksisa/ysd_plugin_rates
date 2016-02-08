@@ -4,10 +4,10 @@
 
   <% if price_definition.season_definition %>
 
-    <% rows = 3 %>
+    <% rows = 1 %>
     <% item_count = price_definition.season_definition.seasons.size %>
-    <% if item_count >= 3 
-         items_in_column = item_count / 3
+    <% if item_count >= 7 
+         items_in_column = 7 #item_count / 1
          data = price_definition.season_definition.seasons.each_slice(items_in_column).to_a 
        else
          items_in_column = item_count

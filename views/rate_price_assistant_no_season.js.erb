@@ -32,6 +32,9 @@ ratePriceAssistantNoSeasonModel = {
                  var id=priceDefinitionId+'-'+units;
                  $('#'+id).replaceWith(
                   '<form name="update_price" id="' + id + '">'+
+                    '<label for="'+data.id+'" class="right-margin">'+
+                    '<%=t.rate_price_assistant.unit%>' +
+                    '</label>' +                 
                     '<input type="text" size="5" maxlenght="10" name="' + data.id +
                        '" value="' + value + '" class="price_update right_text">'+
                   '</form>');

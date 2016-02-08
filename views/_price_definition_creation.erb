@@ -1,22 +1,22 @@
                 <div class="formrow">
-                   <label for="price_definition[type]" class="fieldtitle"><%= t.rate_price_def_management.form.type %> <span class="mandatoryfield">*</span></label>
-                   <select id="price_definition[type]" name="price_definition[type]">
+                   <label for="price_definition<%=defined?(suffix) ? suffix : ''%>[type]" class="fieldtitle"><%= t.rate_price_def_management.form.type %> <span class="mandatoryfield">*</span></label>
+                   <select id="price_definition<%=defined?(suffix) ? suffix : ''%>[type]" name="price_definition<%=defined?(suffix) ? suffix : ''%>[type]">
                      <option value="season" <%% if (entity && entity.type=="season") { %> selected="selected" <%% } %>><%=t.rate_price_def_management.form.type_season%></option>
                      <option value="no_season" <%% if (entity && entity.type=="no_season") { %> selected="selected" <%% } %>><%=t.rate_price_def_management.form.type_no_season%></option>  
                    </select>
                 </div>
                 <div id="season" class="formrow">
-                   <label for="price_definition[season_definition][id]" class="fieldtitle"><%= t.rate_price_def_management.form.season %> <span class="mandatoryfield">*</span></label>            
-                   <select id="price_definition[season_definition][id]" name="price_definition[season_definition][id]"/>
+                   <label for="price_definition<%=defined?(suffix) ? suffix : ''%>[season_definition][id]" class="fieldtitle"><%= t.rate_price_def_management.form.season %> <span class="mandatoryfield">*</span></label>            
+                   <select id="price_definition<%=defined?(suffix) ? suffix : ''%>[season_definition][id]" name="price_definition<%=defined?(suffix) ? suffix : ''%>[season_definition][id]"/>
                 </div>
                 <div class="formrow">
-                   <label for="price_definition[units_management]" class="fieldtitle"><%= t.rate_price_def_management.form.price_specification %></label>
+                   <label for="price_definition<%=defined?(suffix) ? suffix : ''%>[units_management]" class="fieldtitle"><%= t.rate_price_def_management.form.price_specification %></label>
                    <div class="fieldcontrol">
-                      <input type="radio" name="price_definition[units_management]" value="unitary" checked="true"><%= t.rate_price_def_management.form.unitary_price_specification %></input>
+                      <input type="radio" name="price_definition<%=defined?(suffix) ? suffix : ''%>[units_management]" value="unitary" checked="true"><%= t.rate_price_def_management.form.unitary_price_specification %></input>
                    </div>
                    <div class="fieldcontrol">
-                      <input type="radio" name="price_definition[units_management]" value="detailed"><%= t.rate_price_def_management.form.detailed_price_specification %>              
-                      <select id="price_definition[units_management_value]" name="price_definition[units_management_value]" disabled="disabled">
+                      <input type="radio" name="price_definition<%=defined?(suffix) ? suffix : ''%>[units_management]" value="detailed"><%= t.rate_price_def_management.form.detailed_price_specification %>              
+                      <select id="price_definition<%=defined?(suffix) ? suffix : ''%>[units_management_value]" name="price_definition[units_management_value]" disabled="disabled">
                           <option value="2">2</option>
                           <option value="3">3</option>
                           <option value="4">4</option>

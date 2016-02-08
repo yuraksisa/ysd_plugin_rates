@@ -1,0 +1,92 @@
+ require(['jquery', 'YSDEntityManagement', 'YSDForms', 
+          'jquery.validate','json2',
+          'jquery.ui', 'jquery.ui.datepicker-es', 'jquery.ui.datepicker.validation',
+          'autonumeric'], 
+          function($, EntityManagement, YSDForms) {
+
+ 
+  function PromotionCodeHook() {
+ 	   
+    this.entityKey = function(entity) {
+      return entity.id;
+    }
+
+    this.onEdit = function(entity) {
+      $('#date_from').focus();  	
+      this.configForm(entity);
+    };
+  
+    this.onNew = function() {
+  	  $('#promotion_code').focus();
+  	  this.configForm(null);
+    }
+    
+    this.onRenderEntities = function(entities) {
+      $('.elements-search').show();	
+    }
+    
+    this.configForm = function(entity) {
+      
+      var locale = $.datepicker.regional["<%=session[:locale] || 'es'%>"];
+
+      $('#date_from').datepicker(
+            {numberOfMonths:1, dateFormat: 'dd/mm/yy'},
+            locale);
+      $('#date_to').datepicker(
+            {numberOfMonths:1, dateFormat: 'dd/mm/yy'},
+            locale);
+
+      if (entity) {
+        $('#date_from').datetimepicker('setDate', entity.date_from);
+        $('#date_to').datetimepicker('setDate', entity.date_to);
+      }
+
+      $('#value').autoNumeric('init',{aSep:''});
+
+      this.configValidation();
+    	
+    }
+    
+    this.configValidation = function() {
+           	 
+       	 $('#promotion_code_management_form').validate({
+       	  	
+            submitHandler: function(form) 
+            {
+               return false;
+            },
+                 	        	   
+       	    rules : { // rules
+       	       'promotion_code': {
+       	         required: true	
+       	       }
+       	    },
+       	    
+       	    messages : { // messages
+       	       'promotion_code': {
+       	       	 required : '<%=t.promotion_code_management.form.promotion_code_required%>'
+       	       }
+       	    }
+       	    
+       	  }
+       	 );
+    	
+    	
+    }
+  	
+  };
+  
+  var urls = { 
+  	           query_url  : '/api/promotion-codes',
+    	         create_url : '/api/promotion-code',
+  	           update_url : '/api/promotion-code',
+  	           delete_url : '/api/promotion-code',
+  	           get_url    : '/api/promotion-code'
+  	         };
+  
+  var promotionCodeHook = new PromotionCodeHook();
+  var reateFactorManager = new EntityManagement(urls, 'promotion_code', 
+      20, promotionCodeHook, 
+      {prefix: '/admin/rates'});
+ 
+ });

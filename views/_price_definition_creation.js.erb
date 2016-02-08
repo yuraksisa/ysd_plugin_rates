@@ -5,22 +5,27 @@ require(['jquery', 'YSDEntityManagementComplementHooks',
   /* ------------------------------------------------
      Plugin for price definition creation
      ------------------------------------------------ */
-  function PriceDefinitionCreationHookPlugin() {
+  function PriceDefinition<%=defined?(suffix) ? suffix : ''%>CreationHookPlugin() {
 	
     this.onNew = function () {
        this.configForm(null);
     }
 
+    this.onEdit = function(entity) {
+       this.configForm(entity);
+    }
+
     this.adaptFormData = function(data) {
             
-      if (data.price_definition && data.price_definition.id == '') {
-        if (!data.price_definition.type) {
-          data.price_definition = null;
+      if (data.price_definition<%=defined?(suffix) ? suffix : ''%> && 
+          data.price_definition<%=defined?(suffix) ? suffix : ''%>.id == '') {
+        if (!data.price_definition<%=defined?(suffix) ? suffix : ''%>.type) {
+          data.price_definition<%=defined?(suffix) ? suffix : ''%> = null;
         }
         else {
-          delete data.price_definition.id;
-          data.price_definition.name = data.name;
-          data.price_definition.description = data.name;          
+          delete data.price_definition<%=defined?(suffix) ? suffix : ''%>.id;
+          data.price_definition<%=defined?(suffix) ? suffix : ''%>.name = data.name;
+          data.price_definition<%=defined?(suffix) ? suffix : ''%>.description = data.name;          
         }
       }
 
@@ -30,9 +35,9 @@ require(['jquery', 'YSDEntityManagementComplementHooks',
 
     this.configForm = function(entity) {
              
-      $('#price_definition\\[type\\]').bind('change',
+      $('#price_definition<%=defined?(suffix) ? suffix : ''%>\\[type\\]').bind('change',
         function() {
-          if ($('#price_definition\\[type\\]').val() == 'season') {
+          if ($('#price_definition<%=defined?(suffix) ? suffix : ''%>\\[type\\]').val() == 'season') {
             $('#season').show();
           }
           else {
@@ -40,25 +45,27 @@ require(['jquery', 'YSDEntityManagementComplementHooks',
           }
       });
 
-      $('input[name="price_definition\\[units_management\\]"]').bind('change',
+      $('input[name="price_definition<%=defined?(suffix) ? suffix : ''%>\\[units_management\\]"]').bind('change',
         function() {
            if ($(this).val() == 'detailed') {
-             $('#price_definition\\[units_management_value\\]').prop('disabled', false);
+             $('#price_definition<%=defined?(suffix) ? suffix : ''%>\\[units_management_value\\]').prop('disabled', false);
            }
            else {
-             $('#price_definition\\[units_management_value\\]').prop('disabled', true);
+             $('#price_definitio<%=defined?(suffix) ? suffix : ''%>n\\[units_management_value\\]').prop('disabled', true);
            }
         });
 
-      var seasonDataSource= new RemoteDataSource('/api/rate-season-defs',{'id':'id','description':'name'});
-      var seasonValue = (entity && entity.season_definition_id)?entity.season_definition_id:''; 
-      var seasonSelector = new SelectSelector('price_definition[season_definition][id]', seasonDataSource, seasonValue, false);
+      if (document.getElementById('price_definition<%=defined?(suffix) ? suffix : ''%>[season_definition][id]')) {
+        var seasonDataSource= new RemoteDataSource('/api/rate-season-defs',{'id':'id','description':'name'});
+        var seasonValue = (entity && entity.season_definition_id)?entity.season_definition_id:''; 
+        var seasonSelector = new SelectSelector('price_definition<%=defined?(suffix) ? suffix : ''%>[season_definition][id]', seasonDataSource, seasonValue, false);
+      }
       
     }
 
   }
 	
-  var priceDefinitionCreationHookPlugin = new PriceDefinitionCreationHookPlugin();
+  var priceDefinitionCreationHookPlugin = new PriceDefinition<%=defined?(suffix) ? suffix : ''%>CreationHookPlugin();
   EntityManagementComplementHooks.register(priceDefinitionCreationHookPlugin);	
 
 });
