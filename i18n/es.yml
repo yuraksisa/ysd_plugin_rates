@@ -20,6 +20,7 @@ rates_console:
   factors: Factores
   rates: Precios
   promotion_codes: Códigos promoción
+  discounts: Ofertas y descuentos
 rate_season_def_management:
   title: Temporadas
   description: Definición de temporadas
@@ -133,4 +134,17 @@ promotion_code_management:
     discount: Descuento
     percentage: "%"
     amount: Importe
-    promotion_code_required: Código promoción obligatorio  
+    promotion_code_required: Código promoción obligatorio
+discount_management:
+  title: Ofertas (descuentos)
+  description: Ofertas y descuentos
+  table:
+    date_from: Desde
+    date_to: Hasta
+    discount: Descuento
+  form:
+    date_from: Desde
+    date_to: Hasta
+    discount: Descuento
+    percentage: "%"
+    amount: Importe

@@ -1,10 +1,28 @@
-#require 'ysd_md_calendar' unless defined?Yito::Model::Calendar::Calendar
-
 module Sinatra
   module YitoExtension
     module PromotionCodeManagementRESTApi
 
       def self.registered(app)
+        
+        #
+        # Check the promotion code
+        #
+        app.post '/api/check-promotion-code/?' do 
+
+          if promotion_code = ::Yito::Model::Rates::PromotionCode.first(promotion_code: params[:code])
+            today = Date.today
+            if today >= promotion_code.date_from && today <= promotion_code.date_to
+              content_type :json
+              {value: promotion_code.value, 
+               discount_type: promotion_code.discount_type}.to_json
+            else
+              status 404
+            end
+          else
+            status 404
+          end
+
+        end
 
         #                    
         # Query promotion codes

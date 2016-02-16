@@ -23,5 +23,7 @@ Plugins::SinatraAppPlugin.register :rates do
    sinatra_extension Sinatra::YitoExtension::PriceManagementRESTApi
    sinatra_extension Sinatra::YitoExtension::PromotionCodeManagement
    sinatra_extension Sinatra::YitoExtension::PromotionCodeManagementRESTApi
+   sinatra_extension Sinatra::YitoExtension::DiscountManagement
+   sinatra_extension Sinatra::YitoExtension::DiscountManagementRESTApi
 
 end
