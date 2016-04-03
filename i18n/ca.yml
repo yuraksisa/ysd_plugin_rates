@@ -82,9 +82,9 @@ rate_price_def_management:
     description: Descripció
     max_price: Preu màxim
     base_price: Preu base
-    price_specification: Com s\'introdueixen els preus?
-    unitary_price_specification: Un únic preu unitari o per dia
-    detailed_price_specification: Diferents preus en funció del nombre d\'unitats o de dies    
+    unitary_price_specification: Un unic preu unitari o per dia
+    price_specification: Com s'introdueixen els preus    
+    detailed_price_specification: Diferents preus en funció del nombre d\"unitats o de dies    
     type: Tipus
     type_no_season: Preu general
     type_season: Preus per temporada
@@ -113,4 +113,4 @@ rate_price_management:
     units: Unitats
     price: Preu
     units_required: Unitats obligatorio
-    price_required: Preu obligatorio       
+    price_required: Preu obligatorio
