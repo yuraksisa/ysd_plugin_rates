@@ -51,7 +51,7 @@ module Sinatra
         #
         app.get "/api/rate-price-defs" do
 
-          data = ::Yito::Model::Rates::PriceDefinition.all(:order => :name.asc)
+          data = ::Yito::Model::Rates::PriceDefinition.all(:name.not => nil ,:order => :name.asc)
 
           status 200
           content_type :json
