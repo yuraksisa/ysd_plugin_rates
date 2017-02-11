@@ -37,26 +37,24 @@ module Sinatra
 
             conditions = {}         
             
-            if request.media_type == "application/x-www-form-urlencoded" # Just the text
-              search_text = if params[:search]
-                              params[:search]
-                            else
-                              request.body.rewind
-                              request.body.read
-                            end
-              conditions = Conditions::JoinComparison.new('$or', 
-                              [Conditions::Comparison.new(:id, '$eq', search_text.to_i),
-                               Conditions::Comparison.new(:promotion_code, '$like', "%#{search_text}%")])   
-
-              total = conditions.build_datamapper(::Yito::Model::Rates::PromotionCode).all.count 
-              data = conditions.build_datamapper(::Yito::Model::Rates::PromotionCode).all(:limit => limit, :offset => offset) 
+            if request.media_type == "application/json"
+              request.body.rewind
+              search_request = JSON.parse(URI.unescape(request.body.read))
+              if search_request.has_key?('search') and !search_request['search'].empty?
+                conditions = Conditions::JoinComparison.new('$or',
+                              [Conditions::Comparison.new(:id, '$eq', search_request['search'].to_i),
+                               Conditions::Comparison.new(:promotion_code, '$like', "%#{search_request['search']}%")])
+                total = conditions.build_datamapper(::Yito::Model::Rates::PromotionCode).all.count
+                data = conditions.build_datamapper(::Yito::Model::Rates::PromotionCode).all(:limit => limit, :offset => offset)
+              else
+                data  = ::Yito::Model::Rates::PromotionCode.all(:limit => limit, :offset => offset)
+                total = ::Yito::Model::Rates::PromotionCode.count
+              end
             else
               data  = ::Yito::Model::Rates::PromotionCode.all(:limit => limit, :offset => offset)
               total = ::Yito::Model::Rates::PromotionCode.count
-                                          
             end
             
-          
             content_type :json
             {:data => data, :summary => {:total => total}}.to_json
           
