@@ -77,7 +77,7 @@
   </thead>
   <tbody class="table-tbody">  
     <% if price_definition.season_definition %>
-      <% price_definition.season_definition.seasons.each do |season| %> 
+      <% price_definition.season_definition.seasons.sort {|x,y| x.name.to_i > 0 && y.name.to_i > 0 ? x.name.to_i <=> y.name.to_i : x.name <=> y.name }.each do |season| %>
         <tr class="table-row"> 
           <td class="table-cell">
            	<%= season.name %> &nbsp; <span class="less_contrast_text"><%= season.to_s %></span>
