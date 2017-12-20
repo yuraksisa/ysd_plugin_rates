@@ -18,7 +18,7 @@
     <div class="container_12">
     <% data.each do |sublist| %>
     <div class="grid_4">
-    <table id="elements_table" class="table smaller_text">
+    <table id="elements_table" class="table">
       <thead class="table-header">
         <tr>
           <th class="table-header-title left_text" scope="col" style="width:50%"><%=t.rate_price_assistant.season%></th>
@@ -64,10 +64,10 @@
 
 <% else %>
 
-<table id="elements_table" class="table smaller_text">
+<table id="elements_table" class="table">
   <thead class="table-header">
     <tr>
-      <th class="table-header-title left_text" scope="col" style="width:20%"><%=t.rate_price_assistant.season_units%></th>
+      <th class="table-header-title left_text" scope="col" style="width:20%"></th>
       <% item_width = 80 / (price_definition.units_management_value + 1) %>
       <% (1..price_definition.units_management_value).each do |item| %>
         <th class="table-header-title centered_text" scope="col" style="width:<%=item_width%>%"><%=item%></th>
