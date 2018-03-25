@@ -6,13 +6,9 @@
   <div class="guiblock">
    <div class="all-space overflow">
       <div class="right-float">
-        <div class="form-button green-button"><a href="/admin/rates/price-defs/<%=price_definition.id%>?destination=<%=request.path_info%>"><%=t.entitymanagement.edit%></a></div>
+        <div class="form-button green-button"><a href="/admin/rates/price-defs/<%=price_definition.id%>"><%=t.entitymanagement.edit%></a></div>
       </div>
       <div class="grid_6">
-        <div>
-          <span class="entity-fieldlabel more_contrast_text"><%=t.rate_price_assistant.price%></span>
-          <span class="entity-fieldvalue"><%= price_definition.name%></span>
-        </div>
         <div>
           <span class="entity-fieldlabel more_contrast_text">Precio base</span>
           <span class="entity-fieldvalue"><%= "%1.2f" % (price_definition.base_price.nil? ? 0 : price_definition.base_price)%></span>

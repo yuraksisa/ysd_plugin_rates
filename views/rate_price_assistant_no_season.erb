@@ -1,6 +1,6 @@
-<%= partial(:rate_assistant_header, :locals => {:price_definition => price_definition}) %>
 <div id="page_wrapper" class="all-space">
-<% if price_definition.units_management == :unitary %>
+  <%= partial(:rate_assistant_header, :locals => {:price_definition => price_definition}) %>
+  <% if price_definition.units_management == :unitary %>
 
    <div class="element-container all-space centered_text">
    <% if prices[1] %>
