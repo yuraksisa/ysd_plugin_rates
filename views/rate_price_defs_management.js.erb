@@ -25,11 +25,11 @@
     
     this.adaptFormData = function(data) {
             
-      if (data.factor_definition.id == '') {
+      if (data.factor_definition && data.factor_definition.id == '') {
         data.factor_definition = null;
       }
 
-      if (data.season_definition.id == '') {
+      if (data.season_definition && data.season_definition.id == '') {
         data.season_definition = null;
       }
 
