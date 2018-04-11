@@ -1,9 +1,9 @@
 <div class="top-navigation-bar">
 <h2 class="entity-title"><%=t.rate_price_assistant.title%></h2>
 </div>
-<div class="all-space">
+
 <div class="container_12">
-  <div class="guiblock">
+  <div class="guiblock" style="display: none">
    <div class="all-space overflow">
       <div class="right-float">
         <div class="form-button green-button"><a href="/admin/rates/price-defs/<%=price_definition.id%>"><%=t.entitymanagement.edit%></a></div>
@@ -15,10 +15,9 @@
         </div>
         <div>
           <span class="entity-fieldlabel more_contrast_text">Precio máximo</span>
-          <span class="entity-fieldvalue"><%= price_definition.max_price == 0 ? t.rate_price_assistant.no_limit : "%1.2f" % (price_definition.max_price.nil? ? 0 :price_definition.max_price)%></span>           	
+          <span class="entity-fieldvalue"><%= price_definition.max_price == 0 ? t.rate_price_assistant.no_limit : "%1.2f" % (price_definition.max_price.nil? ? 0 :price_definition.max_price)%></span>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>
