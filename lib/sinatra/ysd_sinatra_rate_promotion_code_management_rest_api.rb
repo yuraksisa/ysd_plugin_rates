@@ -9,17 +9,12 @@ module Sinatra
         #
         app.post '/api/check-promotion-code/?' do 
 
-          if promotion_code = ::Yito::Model::Rates::PromotionCode.first(promotion_code: params[:code])
-            today = Date.today
-            if today >= promotion_code.date_from && today <= promotion_code.date_to
-              content_type :json
-              {value: promotion_code.value, 
-               discount_type: promotion_code.discount_type}.to_json
-            else
-              status 404
-            end
+          if ::Yito::Model::Rates::PromotionCode.valid_code?(params[:code])
+            content_type :json
+            true.to_json
           else
-            status 404
+            content_type :json
+            false.to_json
           end
 
         end

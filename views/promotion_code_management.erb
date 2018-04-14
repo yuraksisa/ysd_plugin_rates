@@ -52,52 +52,62 @@
 <!-- Renders the form to edit an element -->
 
 <script type="text/tmpl" id="element_template_form">
-              
-     <form name="element" id="promotion_code_management_form">
-      <div class="container_12">  
-        <div class="form-fields grid_6">
-        
-          <%% if (entity) { %>
-          <input type="hidden" id="id" name="id" value="<%%=entity.id%>"/>
-          <%% } %>
 
-          <div class="formrow">
-            <label for="name" class="fieldtitle"><%= t.promotion_code_management.form.promotion_code %> <span class="mandatoryfield">*</span></label>
-            <input type="text" maxlength="80" id="promotion_code" name="promotion_code" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.promotion_code %>" <%% } %> />
+        <div class="row">
+          <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <div class="block block-content-full">
+              <div class="block-header bg-gray-lighter">
+                <h3 class="block-title">Datos básicos</h3>
+              </div>
+              <div class="block-content block-content-narrow">
+                <form name="element"id="promotion_code_management_form"  method="POST" class="form-horizontal">
+                  <%% if (entity) { %>
+                  <input type="hidden" id="id" name="id" value="<%%=entity.id%>"/>
+                  <%% } %>
+                  <div class="form-group">
+                    <label class="col-xs-12"><%= t.promotion_code_management.form.promotion_code %> <span class="mandatoryfield">*</span></label>
+                    <div class="col-sm-9">
+                      <input type="text" maxlength="80" id="promotion_code" name="promotion_code" class="form-control" <%% if (entity) {%> value="<%%=entity.promotion_code %>" <%% } %>/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-12"><%= t.promotion_code_management.form.date_from %></label>
+                    <div class="col-sm-9">
+                      <input type="text" maxlength="15" id="date_from" name="date_from" class="form-control date_control"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-12"><%= t.promotion_code_management.form.date_from %></label>
+                    <div class="col-sm-9">
+                      <input type="text" maxlength="15" id="date_to" name="date_to" class="form-control date_control"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-12"><%= t.promotion_code_management.form.discount %></label>
+                    <div class="col-sm-4">
+                      <input type="text" maxlength="80" id="value" name="value" class="form-control" <%% if (entity) {%> value="<%%=new Number(entity.value).toFixed(2) %>" <%% } %>/>
+                    </div>
+                    <div class="col-sm-5">
+                      <select name="discount_type" class="form-control" id="discount_type">
+                        <option value="percentage"><%= t.promotion_code_management.form.percentage %></option>
+                        <option value="amount"><%= t.promotion_code_management.form.amount %></option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-9">
+                        <%% if (entity) { %>
+                        <input type="button" class="btn btn-sm btn-primary create-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
+                        <%% } else { %>
+                        <input type="button" class="btn btn-sm btn-primary create-entity-button action-button entity-management-button" value="<%=t.entitymanagement.create%>"/>
+                        <%% } %>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-
-          <div class="formrow">
-            <label for="date_from" class="fieldtitle"><%= t.promotion_code_management.form.date_from %></label>
-             <input type="text" name="date_from" id="date_from" class="date_control" size="15" maxlength="10"/>
-          </div>
-
-          <div class="formrow">
-            <label for="date_to" class="fieldtitle"><%= t.promotion_code_management.form.date_to %></label>
-             <input type="text" name="date_to" id="date_to" class="date_control" size="15" maxlength="10"/>
-          </div>
- 
-          <div class="formrow">
-            <label for="date_to" class="fieldtitle"><%= t.promotion_code_management.form.discount %></label>
-            <input type="text" name="value" id="value" class="fieldcontrol" size="30" maxlength="10" style="width:80%" <%% if (entity) { %> value="<%%= new Number(entity.value).toFixed(2) %>" <%% } %> />
-            <select name="discount_type" class="fieldcontrol" id="discount_type">
-              <option value="percentage"><%= t.promotion_code_management.form.percentage %></option>
-              <option value="amount"><%= t.promotion_code_management.form.amount %></option>            
-            </select>   
-          </div>
-        
-          <div class="bottom-navigation-bar navigation-bar">
-             <div class="navigation-bar-crud-buttons">
-                <%% if (entity) { %>
-                  <input type="submit" class="update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
-                <%% } 
-                   else { %>
-                  <input type="submit" class="create-entity-button action-button entity-management-button" value="<%=t.entitymanagement.create%>"/>
-                <%% } %>
-             </div>
-          </div> 
         </div>
-      </div>
-     </form>
-     
+
 
 </script>
