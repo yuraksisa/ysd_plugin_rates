@@ -141,10 +141,14 @@ discount_management:
   table:
     date_from: Desde
     date_to: Hasta
+    source_date_from: Desde (fuente)
+    source_date_to: Hasta (fuente)
     discount: Descuento
   form:
     date_from: Desde
     date_to: Hasta
+    source_date_from: Desde (fuente)
+    source_date_to: Hasta (fuente)
     discount: Descuento
     percentage: "%"
     amount: Importe

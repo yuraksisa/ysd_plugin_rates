@@ -35,9 +35,18 @@
             {numberOfMonths:1, dateFormat: 'dd/mm/yy'},
             locale);
 
+      $('#source_date_from').datepicker(
+          {numberOfMonths:1, dateFormat: 'dd/mm/yy'},
+          locale);
+      $('#source_date_to').datepicker(
+          {numberOfMonths:1, dateFormat: 'dd/mm/yy'},
+          locale);
+
       if (entity) {
         $('#date_from').datetimepicker('setDate', entity.date_from);
         $('#date_to').datetimepicker('setDate', entity.date_to);
+        $('#source_date_from').datetimepicker('setDate', entity.source_date_from);
+        $('#source_date_to').datetimepicker('setDate', entity.source_date_to);
       }
 
       $('#value').autoNumeric('init',{aSep:''});
