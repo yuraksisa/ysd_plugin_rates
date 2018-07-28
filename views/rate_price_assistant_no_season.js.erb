@@ -1,5 +1,34 @@
-require(['jquery','autonumeric'], function($) {
+require(['jquery','autonumeric','jquery.formparams','jquery.toast'], function($) {
 ratePriceAssistantNoSeasonModel = {
+
+  updatePriceDefiniton: function(form) {
+
+      var request = $(form).formParams();
+      console.log(request);
+      var requestJson = JSON.stringify(request);
+
+      $.ajax({
+          type: 'PUT',
+          data : requestJson,
+          url : '/api/rate-price-def',
+          success: function(data, textStatus, jqXHR) {
+              $.toast({
+                  heading: 'Tarifa actualizada',
+                  text: 'Tarifa actualizada con éxito',
+                  position: 'top-right',
+                  bgColor: 'rgb(56, 154, 56)',
+                  textColor: 'white',
+                  loader: false,
+                  stack: false
+              });
+          },
+          error: function(data, textStatus, jqXHR) {
+              alert('Error actualizando tarifa');
+          }
+      });
+
+
+  },
 
   updatePrice: function(id, value) {
 
@@ -53,7 +82,11 @@ ratePriceAssistantNoSeasonModel = {
 
 ratePriceAssistantNoSeasonController = {
 
-  priceChanged: function(control) {
+    updatePriceDefinitionButtonClick: function(form) {
+        ratePriceAssistantNoSeasonModel.updatePriceDefiniton(form);
+    },
+
+    priceChanged: function(control) {
   	 if (control[0].form.name == 'create_price') {
        ratePriceAssistantNoSeasonModel.createPrice($(control[0].form['price_definition_id']).val(),
                                            $(control[0].form['units']).val(), 
@@ -82,6 +115,11 @@ ratePriceAssistantNoSeasonView = {
 
     $('.price_update').autoNumeric('init',{aSep:''});
     $('.price_create').autoNumeric('init',{aSep:''});
+
+    $('#update_price_definition_button_<%=@price_definition.id%>').bind('click', function() {
+        ratePriceAssistantNoSeasonController.updatePriceDefinitionButtonClick($(this)[0].form);
+    });
+    $('.price_definition').autoNumeric('init',{aSep:''});
 
   }
 

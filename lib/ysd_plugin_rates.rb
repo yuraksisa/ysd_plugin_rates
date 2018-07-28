@@ -1,4 +1,5 @@
 require 'sinatra/ysd_sinatra_rates'
+require 'sinatra/ysd_sinatra_rate_helper'
 require 'sinatra/ysd_sinatra_rate_season_defs_management'
 require 'sinatra/ysd_sinatra_rate_season_defs_management_rest_api'
 require 'sinatra/ysd_sinatra_rate_season_management'

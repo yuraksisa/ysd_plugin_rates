@@ -7,7 +7,8 @@ Plugins::SinatraAppPlugin.register :rates do
    author=      'yurak sisa'
    description= 'Rates integration'
    version=     '0.1'
-   
+
+   sinatra_helper Sinatra::RateHelpers
    sinatra_extension Sinatra::YitoExtension::Rates
    sinatra_extension Sinatra::YitoExtension::SeasonDefinitionManagement
    sinatra_extension Sinatra::YitoExtension::SeasonDefinitionManagementRESTApi

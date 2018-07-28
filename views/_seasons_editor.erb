@@ -1,0 +1,134 @@
+<div id="seasons_errors_summary" class="alert alert-danger" <% if @season_definition.seasons_valid? %>style="display: none"<% end %>>
+  <%= t.season_edition.errors %>
+</div>
+
+<div id="seasons_ok_summary" class="alert alert-success" <% if !@season_definition.seasons_valid? %>style="display: none"<% end %>>
+  <%= t.season_edition.ok_message %>
+</div>
+
+<div id="season_errors_container">
+  <% unless @season_definition.seasons_errors.empty? %>
+    <ul>
+      <% @season_definition.seasons_errors.each do |key, value| %>
+        <li><%=value%></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<table id="seasons_table" class="table table-striped" data-season-id="<%=@season_definition.id%>">
+  <thead>
+  <tr>
+    <th><%=t.season_edition.table.name%></th>
+    <th><%=t.season_edition.table.from%></th>
+    <th><%=t.season_edition.table.to%></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @season_definition.seasons_by_date.each do |season| %>
+    <tr class="season">
+      <td>
+        <form id="update_season_<%=season.id%>" name="update_season_<%=season.id%>">
+          <input type="hidden" name="id" value="<%=season.id%>"/>
+          <input type="text" name="name" class="form-control" value="<%=season.name%>" size="3" maxlength="20"/>
+        </form>
+      </td>
+      <td>
+        <input type="number" form="update_season_<%=season.id%>"
+               name="from_day" class="form-control" value="<%=season.from_day%>" size="3" maxlength="2"  style="width: 60px; display: inline-block"/>
+        <select name="from_month" form="update_season_<%=season.id%>"
+                class="form-control" style="width: 100px; display: inline-block">
+          <option value="1" <% if season.from_month == 1%>selected<%end%>><%=t.months.january%></option>
+          <option value="2" <% if season.from_month == 2%>selected<%end%>><%=t.months.february%></option>
+          <option value="3" <% if season.from_month == 3%>selected<%end%>><%=t.months.march%></option>
+          <option value="4" <% if season.from_month == 4%>selected<%end%>><%=t.months.april%></option>
+          <option value="5" <% if season.from_month == 5%>selected<%end%>><%=t.months.may%></option>
+          <option value="6" <% if season.from_month == 6%>selected<%end%>><%=t.months.june%></option>
+          <option value="7" <% if season.from_month == 7%>selected<%end%>><%=t.months.july%></option>
+          <option value="8" <% if season.from_month == 8%>selected<%end%>><%=t.months.august%></option>
+          <option value="9" <% if season.from_month == 9%>selected<%end%>><%=t.months.september%></option>
+          <option value="10" <% if season.from_month == 10%>selected<%end%>><%=t.months.october%></option>
+          <option value="11" <% if season.from_month == 11%>selected<%end%>><%=t.months.november%></option>
+          <option value="12" <% if season.from_month == 12%>selected<%end%>><%=t.months.december%></option>
+        </select>
+      </td>
+      <td>
+        <input type="number" form="update_season_<%=season.id%>"
+               name="to_day" class="form-control" value="<%=season.to_day%>" size="3" maxlength="2"  style="width: 60px; display: inline-block"/>
+        <select name="to_month" form="update_season_<%=season.id%>"
+                class="form-control" style="width: 100px; display: inline-block">
+          <option value="1" <% if season.to_month == 1%>selected<%end%>><%=t.months.january%></option>
+          <option value="2" <% if season.to_month == 2%>selected<%end%>><%=t.months.february%></option>
+          <option value="3" <% if season.to_month == 3%>selected<%end%>><%=t.months.march%></option>
+          <option value="4" <% if season.to_month == 4%>selected<%end%>><%=t.months.april%></option>
+          <option value="5" <% if season.to_month == 5%>selected<%end%>><%=t.months.may%></option>
+          <option value="6" <% if season.to_month == 6%>selected<%end%>><%=t.months.june%></option>
+          <option value="7" <% if season.to_month == 7%>selected<%end%>><%=t.months.july%></option>
+          <option value="8" <% if season.to_month == 8%>selected<%end%>><%=t.months.august%></option>
+          <option value="9" <% if season.to_month == 9%>selected<%end%>><%=t.months.september%></option>
+          <option value="10" <% if season.to_month == 10%>selected<%end%>><%=t.months.october%></option>
+          <option value="11" <% if season.to_month == 11%>selected<%end%>><%=t.months.november%></option>
+          <option value="12" <% if season.to_month == 12%>selected<%end%>><%=t.months.december%></option>
+        </select>
+      </td>
+      <td>
+        <button type="button" form="update_season_<%=season.id%>"
+                class="btn btn-primary col-md-1 update_season_btn" style="width: 32px; display: inline-block"><i class="fa fa-save push-5-r" style="position:relative; left: -2px"></i></button>
+        <button type="button" form="update_season_<%=season.id%>"
+               class="btn btn-danger col-md-1 delete_season_btn" style="margin-left: 2px; width: 32px; display: inline-block"><i class="fa fa-trash push-5-r" style="position:relative; left: -2px"></i></button>
+      </td>
+    </tr>
+
+  <% end %>
+  <tr>
+    <td>
+      <form id="new_season" name="new_season">
+        <input type="text" name="name" class="form-control" size="3" maxlength="20"/>
+      </form>
+    </td>
+    <td>
+      <input type="number" form="new_season"
+             name="from_day" class="form-control" size="3" maxlength="2"  style="width: 60px; display: inline-block"/>
+      <select name="from_month" form="new_season"
+              class="form-control" style="width: 100px; display: inline-block">
+        <option value="1"><%=t.months.january%></option>
+        <option value="2"><%=t.months.february%></option>
+        <option value="3"><%=t.months.march%></option>
+        <option value="4"><%=t.months.april%></option>
+        <option value="5"><%=t.months.may%></option>
+        <option value="6"><%=t.months.june%></option>
+        <option value="7"><%=t.months.july%></option>
+        <option value="8"><%=t.months.august%></option>
+        <option value="9"><%=t.months.september%></option>
+        <option value="10"><%=t.months.october%></option>
+        <option value="11"><%=t.months.november%></option>
+        <option value="12"><%=t.months.december%></option>
+      </select>
+    </td>
+    <td>
+      <input type="number" form="new_season"
+             name="to_day" class="form-control" size="3" maxlength="2"  style="width: 60px; display: inline-block"/>
+      <select name="to_month" form="new_season"
+              class="form-control" style="width: 100px; display: inline-block">
+        <option value="1"><%=t.months.january%></option>
+        <option value="2"><%=t.months.february%></option>
+        <option value="3"><%=t.months.march%></option>
+        <option value="4"><%=t.months.april%></option>
+        <option value="5"><%=t.months.may%></option>
+        <option value="6"><%=t.months.june%></option>
+        <option value="7"><%=t.months.july%></option>
+        <option value="8"><%=t.months.august%></option>
+        <option value="9"><%=t.months.september%></option>
+        <option value="10"><%=t.months.october%></option>
+        <option value="11"><%=t.months.november%></option>
+        <option value="12"><%=t.months.december%></option>
+      </select>
+    </td>
+    <td>
+      <button type="button" form="new_season"
+              id="create_season_btn" type="button" class="btn btn-success" style="width: 66px"><%=t.season_edition.table.create_button%></button>
+    </td>
+  </tr>
+  </tbody>
+</table>

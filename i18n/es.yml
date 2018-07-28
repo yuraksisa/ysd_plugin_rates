@@ -99,13 +99,24 @@ rate_price_def_management:
     type_required: Tipo obligatorio 
     units_management_required: Especificación precio obligatorio
 rate_price_assistant:
-  title: Precios
+  title: Configuración
   price: Precio
+  rates: Precios
   season_units: Temporada / Unidades-días
   season: Temporada
   unit: 1 unidad/día
   units: Unidades-días          
   no_limit: No hay límite
+  extra: Extra
+  standard_price:
+    label: Precio estándar
+    description: Precio estándar (tarifa por defecto)
+  base_price:
+    label: Precio de partida
+    description: Para calcular el precio de venta se suma este importe a la tarifa calculada
+  max_price:
+    label: Precio máximo
+    description: Si la tarifa excede del precio máximo, se utilizará este precio. Dejar el campo a 0 si no queremos máximo
 rate_price_management:
   title: Precios
   description: Precios
@@ -152,3 +163,16 @@ discount_management:
     discount: Descuento
     percentage: "%"
     amount: Importe
+season_edition:
+  errors: >
+          <p>Las temporadas no están bien definidas. Por favor, revise los errores antes de crear las tarifas.</p>
+  ok_message: >
+              <p>Las temporadas están bien definidas. Puede crear las tarifas cuando sea necesario.</p>
+  confirm_delete: ¿Está seguro que desea eliminar la temporada?
+  table:
+    name: Nombre
+    from: Desde
+    to: Hasta
+    update_button: Actualizar
+    create_button: Añadir
+    delete_button: Eliminar

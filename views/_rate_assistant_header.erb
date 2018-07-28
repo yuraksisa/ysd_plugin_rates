@@ -1,23 +1,45 @@
-<div class="top-navigation-bar">
-<h2 class="entity-title"><%=t.rate_price_assistant.title%></h2>
-</div>
-
-<div class="container_12">
-  <div class="guiblock" style="display: none">
-   <div class="all-space overflow">
-      <div class="right-float">
-        <div class="form-button green-button"><a href="/admin/rates/price-defs/<%=price_definition.id%>"><%=t.entitymanagement.edit%></a></div>
-      </div>
-      <div class="grid_6">
-        <div>
-          <span class="entity-fieldlabel more_contrast_text">Precio base</span>
-          <span class="entity-fieldvalue"><%= "%1.2f" % (price_definition.base_price.nil? ? 0 : price_definition.base_price)%></span>
+<div class="block">
+  <div class="block-content block-content-full block-content-mini bg-gray text-white text-center">
+    <%=t.rate_price_assistant.title%>
+  </div>
+  <div class="block-content block-content-full bg-gray-lighter">
+    <form name="update_price_definition_<%=@price_definition.id%>" class="form-horizontal">
+      <input type="hidden" name="id" value="<%=@price_definition.id%>"/>
+      <div class="form-group">
+        <label class="col-md-3 control-label" for="base_price"><%=t.rate_price_assistant.standard_price.label%></label>
+        <div class="col-md-2">
+          <input type="text" size="10" maxlenght="10" name="base_price" value='<%= "%1.2f" % (@price_definition.standard_price.nil? ? 0 : @price_definition.standard_price)%>' class="text-right form-control price_definition">
         </div>
-        <div>
-          <span class="entity-fieldlabel more_contrast_text">Precio máximo</span>
-          <span class="entity-fieldvalue"><%= price_definition.max_price == 0 ? t.rate_price_assistant.no_limit : "%1.2f" % (price_definition.max_price.nil? ? 0 :price_definition.max_price)%></span>
+        <div class="col-md-9 col-md-offset-3">
+          <div class="help-block"><%=t.rate_price_assistant.standard_price.description%></div>
         </div>
       </div>
-    </div>
+      <div class="form-group">
+        <label class="col-md-3 control-label" for="base_price"><%=t.rate_price_assistant.base_price.label%></label>
+        <div class="col-md-2">
+          <input type="text" size="10" maxlenght="10" name="base_price" value='<%= "%1.2f" % (@price_definition.base_price.nil? ? 0 : @price_definition.base_price)%>' class="text-right form-control price_definition">
+        </div>
+        <div class="col-md-9 col-md-offset-3">
+          <div class="help-block"><%=t.rate_price_assistant.base_price.description%></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3 control-label" for="base_price"><%=t.rate_price_assistant.max_price.label%></label>
+        <div class="col-md-2">
+          <input type="text" size="10" maxlenght="10" name="max_price" value='<%= "%1.2f" % (@price_definition.max_price.nil? ? 0 :@price_definition.max_price)%>' class="text-right form-control price_definition">
+        </div>
+        <div class="col-md-9 col-md-offset-3">
+          <div class="help-block"><%=t.rate_price_assistant.max_price.description%></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-9 col-md-offset-3">
+          <input id="update_price_definition_button_<%=@price_definition.id%>" type="button" class="btn btn-sm btn-primary update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
+
+
+

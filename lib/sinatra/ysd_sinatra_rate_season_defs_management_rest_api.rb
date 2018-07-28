@@ -7,11 +7,11 @@ module Sinatra
       def self.registered(app)
 
         #                    
-        # Query rate seasons
+        # Query rate season definitions
         #
         ["/api/rate-season-defs","/api/rate-season-defs/page/:page"].each do |path|
           
-          app.post path do
+          app.post path, allowed_usergroups: ['rates_manager','staff']  do
 
             page = params[:page].to_i || 1
             limit = 20
@@ -45,9 +45,9 @@ module Sinatra
         end
         
         #
-        # Get calendars
+        # Get rate season definitions
         #
-        app.get "/api/rate-season-defs" do
+        app.get "/api/rate-season-defs", allowed_usergroups: ['rates_manager','staff']  do
 
           data = ::Yito::Model::Rates::SeasonDefinition.all
 
@@ -58,9 +58,9 @@ module Sinatra
         end
 
         #
-        # Get a rate-seaon
+        # Get a rate season definition
         #
-        app.get "/api/rate-season-def/:id" do
+        app.get "/api/rate-season-def/:id", allowed_usergroups: ['rates_manager','staff']  do
         
           data = ::Yito::Model::Rates::SeasonDefinition.get(params[:id].to_i)
           
@@ -71,9 +71,9 @@ module Sinatra
         end
         
         #
-        # Create a new rate-seaon
+        # Create a new rate season definition
         #
-        app.post "/api/rate-season-def" do
+        app.post "/api/rate-season-def", allowed_usergroups: ['rates_manager','staff']  do
         
           data_request = body_as_json(::Yito::Model::Rates::SeasonDefinition)
           data = ::Yito::Model::Rates::SeasonDefinition.create(data_request)
@@ -85,9 +85,9 @@ module Sinatra
         end
         
         #
-        # Updates a rate-seaon
+        # Updates a rate season definition
         #
-        app.put "/api/rate-season-def" do
+        app.put "/api/rate-season-def", allowed_usergroups: ['rates_manager','staff']  do
           
           data_request = body_as_json(::Yito::Model::Rates::SeasonDefinition)
                               
@@ -102,9 +102,9 @@ module Sinatra
         end
         
         #
-        # Deletes a calendar
+        # Deletes a rate season definition
         #
-        app.delete "/api/rate-season-def" do
+        app.delete "/api/rate-season-def", allowed_usergroups: ['rates_manager','staff']  do
         
           data_request = body_as_json(::Yito::Model::Rates::SeasonDefinition)
           
@@ -117,6 +117,86 @@ module Sinatra
           content_type :json
           true.to_json
         
+        end
+
+        # ---------------------------------------------------------------------------------------
+
+        #
+        # Append a season to the season definition
+        #
+        app.post '/api/rate-season-def/:id/season', allowed_usergroups: ['rates_manager','staff'] do
+
+          if season_definition = ::Yito::Model::Rates::SeasonDefinition.get(params[:id])
+
+            request_data = body_as_json(::Yito::Model::Rates::Season)
+
+            season = ::Yito::Model::Rates::Season.new(request_data)
+            season.season_definition = season_definition
+            season.save
+
+            season_definition.reload
+
+            # check season to see
+            content_type :json
+            {seasons: season_definition.seasons_by_date.to_a,
+             errors: season_definition.seasons_errors,
+             valid_seasons: season_definition.seasons_valid?}.to_json
+
+          else
+            status 404
+          end
+
+        end
+
+        #
+        # Updates a season
+        #
+        app.put '/api/rate-season/:id', allowed_usergroups: ['rates_manager','staff'] do
+
+          if season = ::Yito::Model::Rates::Season.get(params[:id])
+
+            request_data = body_as_json(::Yito::Model::Rates::Season)
+            season.attributes = request_data
+            season.save
+
+            season_definition = season.season_definition
+            season_definition.reload
+
+            # check season to see
+            content_type :json
+            {seasons: season_definition.seasons_by_date.to_a,
+             errors: season_definition.seasons_errors,
+             valid_seasons: season_definition.seasons_valid?}.to_json
+
+          else
+            status 404
+          end
+
+        end
+
+        #
+        # Deletes a season
+        #
+        app.delete '/api/rate-season/:id', allowed_usergroups: ['rates_manager','staff'] do
+
+          if season = ::Yito::Model::Rates::Season.get(params[:id])
+
+            season_definition = season.season_definition
+
+            season.destroy
+
+            season_definition.reload
+
+            # check season to see
+            content_type :json
+            {seasons: season_definition.seasons_by_date.to_a,
+             errors: season_definition.seasons_errors,
+             valid_seasons: season_definition.seasons_valid?}.to_json
+
+          else
+            status 404
+          end
+
         end
 
       end

@@ -1,5 +1,35 @@
-require(['jquery','autonumeric'], function($) {
+<%= include 'season_definition_edition.js'.to_sym %>
+
+require(['jquery','autonumeric','jquery.formparams','jquery.toast'], function($) {
 ratePriceAssistantModel = {
+
+  updatePriceDefiniton: function() {
+
+      var request = $(form).formParams();
+      var requestJson = JSON.stringify(request);
+
+      $.ajax({
+          type: 'PUT',
+          data : requestJson,
+          url : '/api/rate-price-def',
+          success: function(data, textStatus, jqXHR) {
+              $.toast({
+                  heading: 'Tarifa actualizada',
+                  text: 'Tarifa actualizada con éxito',
+                  position: 'top-right',
+                  bgColor: 'rgb(56, 154, 56)',
+                  textColor: 'white',
+                  loader: false,
+                  stack: false
+              });
+          },
+          error: function(data, textStatus, jqXHR) {
+              alert('Error actualizando tarifa');
+          }
+      });
+
+
+  },
 
   updatePrice: function(id, value) {
 
@@ -50,6 +80,12 @@ ratePriceAssistantModel = {
 
 ratePriceAssistantController = {
 
+  updatePriceDefinitionButtonClick: function(form) {
+
+      ratePriceAssistantModel.updatePriceDefiniton(form);
+
+  },
+
   priceChanged: function(control) {
   	 if (control[0].form.name == 'create_price') {
        ratePriceAssistantModel.createPrice($(control[0].form['price_definition_id']).val(),
@@ -62,6 +98,13 @@ ratePriceAssistantController = {
         ratePriceAssistantModel.updatePrice(control[0].name, 
                                             control[0].value);
   	 	}
+  },
+
+  editSeasonClick: function() {
+
+      $('#seasons_modal .modal-title').html('Temporadas');
+      $('#seasons_modal').modal('show');
+
   }
 
 };
@@ -70,16 +113,46 @@ ratePriceAssistantView = {
 
   init: function() {
 
-    $('.price_update').bind('change', function() {
-      ratePriceAssistantController.priceChanged($(this));  
+    this.setupPriceDefinitionEvents();
+    this.setupPriceEvents();
+    $('#edit_season').bind('click', function(){
+          ratePriceAssistantController.editSeasonClick();
     });
 
-    $('.price_create').bind('change', function() {
-      ratePriceAssistantController.priceChanged($(this));  
+    seasonDefinitionEditionModel.addListener('seasons_modified', function(event) {
+       ratePriceAssistantView.refresh();
     });
 
-    $('.price_update').autoNumeric('init',{aSep:''});
-    $('.price_create').autoNumeric('init',{aSep:''});
+  },
+
+  setupPriceDefinitionEvents: function() {
+      $('#update_price_definition_button_<%=@price_definition.id%>').bind('click', function() {
+          ratePriceAssistantController.updatePriceDefinitionButtonClick($(this).form[0]);
+      });
+      $('.price_definition').autoNumeric('init',{aSep:''});
+  },
+
+  setupPriceEvents: function() {
+      $('.price_update').bind('change', function() {
+          ratePriceAssistantController.priceChanged($(this));
+      });
+
+      $('.price_create').bind('change', function() {
+          ratePriceAssistantController.priceChanged($(this));
+      });
+
+      $('.price_update').autoNumeric('init',{aSep:''});
+      $('.price_create').autoNumeric('init',{aSep:''});
+
+  },
+
+  refresh: function() {
+      var priceDefinitionId = $('#rates_detail').attr('data-price-definition-id');
+      $('#rates_detail_prices').load(
+          '/admin/rates/prices/' + priceDefinitionId + '/detail',
+          function(){
+              ratePriceAssistantView.setupPriceEvents();
+          });
 
   }
 

@@ -1,0 +1,182 @@
+require(['jquery','ysdtemplate','YSDEventTarget', 'autonumeric','jquery.formparams','jquery.toast'],
+        function($,tmpl,EventTarget) {
+    seasonDefinitionEditionModel = {
+       seasons: null,
+       errors: null,
+       validSeasons: null,
+       events : new EventTarget(),
+       addListener: function(type, listener) {
+         this.events.addEventListener(type, listener);
+       },
+       removeListener: function(type, listener) {
+         this.events.removeEventListener(type, listener);
+       },
+       addSeason: function() {
+           var id = $('#seasons_table').attr('data-season-id');
+           var request = $('form[name=new_season]').formParams();
+           var requestJSON = JSON.stringify(request);
+           var url = '/api/rate-season-def/'+id+'/season';
+           $.ajax({
+               type: 'POST',
+               data : requestJSON,
+               url : url,
+               success: function(data, textStatus, jqXHR) {
+                   seasonDefinitionEditionModel.seasons = data.seasons;
+                   seasonDefinitionEditionModel.errors = data.errors;
+                   seasonDefinitionEditionModel.validSeasons = data.valid_seasons;
+                   seasonDefinitionEditionView.update('seasonAdded');
+                   $.toast({
+                       heading: 'Temporada creada',
+                       text: 'Temporada creada con éxito',
+                       position: 'top-right',
+                       bgColor: 'rgb(56, 154, 56)',
+                       textColor: 'white',
+                       loader: false,
+                       stack: false
+                   });
+               },
+               error: function(data, textStatus, jqXHR) {
+                   alert('Error creando temporada');
+               }
+           });
+       },
+       updateSeason: function(form) {
+          var request = $(form).formParams();
+
+          var url = '/api/rate-season/'+request.id;
+          delete request['id'];
+          var requestJSON = JSON.stringify(request);
+
+          $.ajax({
+              type: 'PUT',
+              data : requestJSON,
+              url : url,
+              success: function(data, textStatus, jqXHR) {
+                  seasonDefinitionEditionModel.seasons = data.seasons;
+                  seasonDefinitionEditionModel.errors = data.errors;
+                  seasonDefinitionEditionModel.validSeasons = data.valid_seasons;
+                  seasonDefinitionEditionView.update('seasonUpdated');
+                  $.toast({
+                      heading: 'Temporada actualizada',
+                      text: 'Temporada actualizada con éxito',
+                      position: 'top-right',
+                      bgColor: 'rgb(56, 154, 56)',
+                      textColor: 'white',
+                      loader: false,
+                      stack: false
+                  });
+              },
+              error: function(data, textStatus, jqXHR) {
+                  alert('Error actualizando temporada');
+              }
+          });
+       },
+       deleteSeason: function(form) {
+            var request = $(form).formParams();
+
+            var url = '/api/rate-season/'+request.id;
+
+            $.ajax({
+                type: 'DELETE',
+                url : url,
+                success: function(data, textStatus, jqXHR) {
+                    seasonDefinitionEditionModel.seasons = data.seasons;
+                    seasonDefinitionEditionModel.errors = data.errors;
+                    seasonDefinitionEditionModel.validSeasons = data.valid_seasons;
+                    seasonDefinitionEditionView.update('seasonDeleted');
+                    $.toast({
+                        heading: 'Temporada eliminada',
+                        text: 'Temporada eliminada con éxito',
+                        position: 'top-right',
+                        bgColor: 'rgb(56, 154, 56)',
+                        textColor: 'white',
+                        loader: false,
+                        stack: false
+                    });
+                },
+                error: function(data, textStatus, jqXHR) {
+                    alert('Error eliminando temporada');
+                }
+            });
+        }
+    };
+    seasonDefinitionEditionController = {
+        updateSeasonBtnClick: function(form) {
+            seasonDefinitionEditionModel.updateSeason(form);
+        },
+        deleteSeasonBtnClick: function(form) {
+            if (confirm('<%=t.season_edition.confirm_delete%>')) {
+                seasonDefinitionEditionModel.deleteSeason(form);
+            }
+        },
+        createSeasonBtnClick: function() {
+            seasonDefinitionEditionModel.addSeason();
+        }
+    };
+    seasonDefinitionEditionView = {
+
+        init: function() {
+          this.setupEvents();
+        },
+
+        setupEvents: function() {
+          this.setupSeasonEditionButtons();
+          $('#create_season_btn').bind('click', function(){
+              seasonDefinitionEditionController.createSeasonBtnClick();
+          });
+        },
+
+        setupSeasonEditionButtons: function() {
+            $('.update_season_btn').unbind('click');
+            $('.update_season_btn').bind('click', function(){
+                seasonDefinitionEditionController.updateSeasonBtnClick($(this)[0].form);
+            });
+            $('.delete_season_btn').unbind('click');
+            $('.delete_season_btn').bind('click', function(){
+                seasonDefinitionEditionController.deleteSeasonBtnClick($(this)[0].form);
+            });
+        },
+
+        refresh: function() {
+            var html = tmpl('seasons_script')({seasons: seasonDefinitionEditionModel.seasons});
+            $('#seasons_table tr.season').remove();
+            $('#seasons_table tbody tr:first').before(html);
+            this.setupSeasonEditionButtons();
+            if (seasonDefinitionEditionModel.validSeasons) {
+                $('#seasons_errors_summary').hide();
+                $('#seasons_ok_summary').show();
+            }
+            else {
+                $('#seasons_errors_summary').show();
+                $('#seasons_ok_summary').hide();
+            }
+            if (seasonDefinitionEditionModel.validSeasons) {
+                $('#season_errors_container').empty();
+            }
+            else {
+                var htmlErrors = tmpl('seasons_errors_script')({errors: seasonDefinitionEditionModel.errors});
+                $('#season_errors_container').html(htmlErrors);
+            }
+            seasonDefinitionEditionModel.events.fireEvent('seasons_modified');
+        },
+
+        update: function(action) {
+            switch (action) {
+                case 'seasonAdded':
+                    this.refresh();
+                    $('form[name=new_season]')[0].reset();
+                    break;
+                case 'seasonUpdated':
+                    this.refresh();
+                    break;
+                case 'seasonDeleted':
+                    this.refresh();
+                    break;
+            }
+        }
+
+    };
+
+    seasonDefinitionEditionView.init();
+
+});

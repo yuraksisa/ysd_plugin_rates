@@ -1,0 +1,68 @@
+<script id="seasons_script" type="text/tmpl">
+  <%% for (var idx=0; idx< seasons.length; idx++) { %>
+    <tr class="season">
+        <td>
+          <form id="update_season_<%%=seasons[idx].id%>" name="update_season_<%%=seasons[idx].id%>">
+            <input type="hidden" name="id" value="<%%=seasons[idx].id%>"/>
+            <input type="text" name="name" class="form-control" value="<%%=seasons[idx].name%>" size="3" maxlength="20"/>
+          </form>
+        </td>
+        <td>
+          <input type="number" form="update_season_<%%=seasons[idx].id%>"
+                 name="from_day" class="form-control" size="3" maxlength="2"
+                 style="width: 60px; display: inline-block"
+                 value="<%%=seasons[idx].from_day%>"/>
+          <select name="from_month" form="update_season_<%%=seasons[idx].id%>"
+                  class="form-control" style="width: 100px; display: inline-block">
+              <option value="1" <%% if(seasons[idx].from_month == 1) { %>selected<%%}%>><%=t.months.january%></option>
+              <option value="2" <%% if(seasons[idx].from_month == 2) { %>selected<%%}%>><%=t.months.february%></option>
+              <option value="3" <%% if(seasons[idx].from_month == 3) { %>selected<%%}%>><%=t.months.march%></option>
+              <option value="4" <%% if(seasons[idx].from_month == 4) { %>selected<%%}%>><%=t.months.april%></option>
+              <option value="5" <%% if(seasons[idx].from_month == 5) { %>selected<%%}%>><%=t.months.may%></option>
+              <option value="6" <%% if(seasons[idx].from_month == 6) { %>selected<%%}%>><%=t.months.june%></option>
+              <option value="7" <%% if(seasons[idx].from_month == 7) { %>selected<%%}%>><%=t.months.july%></option>
+              <option value="8" <%% if(seasons[idx].from_month == 8) { %>selected<%%}%>><%=t.months.august%></option>
+              <option value="9" <%% if(seasons[idx].from_month == 9) { %>selected<%%}%>><%=t.months.september%></option>
+              <option value="10" <%% if(seasons[idx].from_month == 10) { %>selected<%%}%>><%=t.months.october%></option>
+              <option value="11" <%% if(seasons[idx].from_month == 11) { %>selected<%%}%>><%=t.months.november%></option>
+              <option value="12" <%% if(seasons[idx].from_month == 12) { %>selected<%%}%>><%=t.months.december%></option>
+          </select>
+        </td>
+        <td>
+          <input type="number" form="update_season_<%%=seasons[idx].id%>"
+                 name="to_day" class="form-control" size="3" maxlength="2"
+                 style="width: 60px; display: inline-block"
+                 value="<%%=seasons[idx].to_day%>"/>
+          <select name="to_month" form="update_season_<%%=seasons[idx].id%>"
+                  class="form-control" style="width: 100px; display: inline-block">
+              <option value="1" <%% if(seasons[idx].to_month == 1) { %>selected<%%}%>><%=t.months.january%></option>
+              <option value="2" <%% if(seasons[idx].to_month == 2) { %>selected<%%}%>><%=t.months.february%></option>
+              <option value="3" <%% if(seasons[idx].to_month == 3) { %>selected<%%}%>><%=t.months.march%></option>
+              <option value="4" <%% if(seasons[idx].to_month == 4) { %>selected<%%}%>><%=t.months.april%></option>
+              <option value="5" <%% if(seasons[idx].to_month == 5) { %>selected<%%}%>><%=t.months.may%></option>
+              <option value="6" <%% if(seasons[idx].to_month == 6) { %>selected<%%}%>><%=t.months.june%></option>
+              <option value="7" <%% if(seasons[idx].to_month == 7) { %>selected<%%}%>><%=t.months.july%></option>
+              <option value="8" <%% if(seasons[idx].to_month == 8) { %>selected<%%}%>><%=t.months.august%></option>
+              <option value="9" <%% if(seasons[idx].to_month == 9) { %>selected<%%}%>><%=t.months.september%></option>
+              <option value="10" <%% if(seasons[idx].to_month == 10) { %>selected<%%}%>><%=t.months.october%></option>
+              <option value="11" <%% if(seasons[idx].to_month == 11) { %>selected<%%}%>><%=t.months.november%></option>
+              <option value="12" <%% if(seasons[idx].to_month == 12) { %>selected<%%}%>><%=t.months.december%></option>
+          </select>
+        </td>
+        <td>
+          <button type="button" form="update_season_<%%=seasons[idx].id%>" class="btn btn-primary update_season_btn" style="width: 32px; display: inline-block"><i class="fa fa-save push-5-r"></i></button>
+          <button type="button" form="update_season_<%%=seasons[idx].id%>" class="btn btn-danger delete_season_btn" style="width: 32px; display: inline-block"><i class="fa fa-trash push-5-r"></i></button>
+        </td>
+    </tr>
+  <%% } %>
+</script>
+
+<script id="seasons_errors_script" type="text/tmpl">
+
+  <ul>
+  <%% for (var idx in errors) { %>
+    <li><%%=errors[idx]%></li>
+  <%% } %>
+  </ul>
+
+</script>

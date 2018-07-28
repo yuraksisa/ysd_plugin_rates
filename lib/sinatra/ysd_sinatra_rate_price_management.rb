@@ -5,43 +5,47 @@ module Sinatra
 
       def self.registered(app)
 
-        app.get '/admin/rates/prices/:price_def_id/?*', :allowed_usergroups => ['rates_manager','staff'] do 
+        #
+        # Load the section of price detail
+        #
+        app.get '/admin/rates/prices/:price_def_id/detail', :allowed_usergroups => ['rates_manager','staff'] do
 
-          if price_definition = ::Yito::Model::Rates::PriceDefinition.get(params[:price_def_id])
-            prices = {}
-            if price_definition.type == :no_season
-              price_definition.prices.each do |price|
-                  prices[price.units] = {} 
-                  prices[price.units][:id] = price.id
-                  prices[price.units][:price] = price.price
-                  prices[price.units][:adjust_operation] = price.adjust_operation
-                  prices[price.units][:adjust_amount] = price.adjust_amount
-              end
-              locals = {:price_definition => price_definition, :prices => prices}
-              load_page :rate_price_assistant_no_season, :locals => locals
+          if @price_definition = ::Yito::Model::Rates::PriceDefinition.get(params[:price_def_id])
+            @prices = build_prices(@price_definition)
+            if @price_definition.type == :no_season
+              partial :rate_assistant_rates_detail_no_season
             else
-              price_definition.season_definition.seasons.each do |season|
-                prices.store(season.id, {})
-              end
-              price_definition.prices.each do |price|
-                if price.season and prices.has_key?(price.season.id)
-                  prices[price.season.id][price.units] = {} if prices[price.season.id][price.units].nil?
-                  prices[price.season.id][price.units][:id] = price.id
-                  prices[price.season.id][price.units][:price] = price.price
-                  prices[price.season.id][price.units][:adjust_operation] = price.adjust_operation
-                  prices[price.season.id][price.units][:adjust_amount] = price.adjust_amount                  
-                end
-              end
-              locals = {:price_definition => price_definition, :prices => prices}
-              load_page :rate_price_assistant, :locals => locals
+              @season_definition = @price_definition.season_definition
+              partial :rate_assistant_rates_detail
             end
           else
             status 404
           end
-        
 
         end
 
+        #
+        # Rates editor
+        #
+        app.get '/admin/rates/prices/:price_def_id', :allowed_usergroups => ['rates_manager','staff'] do
+
+          if @price_definition = ::Yito::Model::Rates::PriceDefinition.get(params[:price_def_id])
+            @prices = build_prices(@price_definition)
+            if @price_definition.type == :no_season
+              load_page :rate_price_assistant_no_season
+            else
+              @season_definition = @price_definition.season_definition
+              load_page :rate_price_assistant
+            end
+          else
+            status 404
+          end
+
+        end
+
+        #
+        # Massive adjust prices
+        #
         app.get '/admin/rates/adjust-prices/?*', :allowed_usergroups => ['rates_manager','staff'] do 
 
           load_page(:adjust_prices)
