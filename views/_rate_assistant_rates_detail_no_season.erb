@@ -12,8 +12,8 @@
             <form name="update_price" class="form-horizontal">
               <div class="form-group">
                 <label class="col-md-3 control-label" for="<%=@prices[1][:id]%>"><%=t.rate_price_assistant.unit%></label>
-                <div class="col-md-1">
-                  <input type="text" size="5" maxlenght="10" name="<%=@prices[1][:id]%>" value='<%="%.2f" % @prices[1][:price]%>' class="price_update text-right form-control">
+                <div class="col-md-4">
+                  <input type="text" size="20" maxlenght="10" name="<%=@prices[1][:id]%>" value='<%="%.2f" % @prices[1][:price]%>' class="price_update text-right form-control">
                 </div>
                 <% unless @prices[1][:adjust_operation] == ' '%>
                   <div class="col-md-1">
@@ -26,12 +26,16 @@
               </div>
             </form>
           <% else %>
-            <!--form name="create_price" id="<%="#{@price_definition.id}-1"%>">
-                     <input type="hidden" name="units" value="1"/>
-                     <input type="hidden" name="price_definition_id" value="<%=@price_definition.id%>"/>
-                     <label for="price" class="right-margin"><%=t.rate_price_assistant.unit%></label>
-                     <input type="text" size="5" maxlenght="10" name="price" value="0.00" class="price_create right_text"/>
-                  </form-->
+            <form name="create_price" class="form-horizontal" id="<%="#{@price_definition.id}-1"%>">
+              <input type="hidden" name="units" value="1"/>
+              <input type="hidden" name="price_definition_id" value="<%=@price_definition.id%>"/>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="price"><%=t.rate_price_assistant.unit%></label>
+                <div class="col-md-4">
+                  <input type="text" size="20" maxlenght="10" name="price" value="0.00" class="price_create text-right form-control"/>
+                </div>
+              </div>
+            </form>
           <% end %>
         </div>
       </div>
