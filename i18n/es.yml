@@ -135,13 +135,17 @@ promotion_code_management:
   description: Códigos de promoción
   table:
     promotion_code: Código promoción
-    date_from: Desde
-    date_to: Hasta
+    date_from: Recibido desde
+    date_to: Recibido hasta
+    source_date_from: Desde
+    source_date_to: Hasta
     discount: Descuento
   form:
     promotion_code: Código promoción
-    date_from: Desde
-    date_to: Hasta
+    date_from: Recibido desde
+    date_to: Recibido hasta
+    source_date_from: Desde
+    source_date_to: Hasta
     discount: Descuento
     percentage: "%"
     amount: Importe

@@ -9,7 +9,28 @@ module Sinatra
         #
         app.post '/api/check-promotion-code/?' do 
 
-          if ::Yito::Model::Rates::PromotionCode.valid_code?(params[:code])
+          promotion_code = params[:code]
+          date_from = date_to = nil
+
+          if params[:from]
+            begin
+              date_from = DateTime.strptime(params[:from], '%Y-%m-%d')
+            rescue
+              logger.error("from date not valid #{params[:from]}")
+            end
+          end
+
+          if params[:to]
+            begin
+              date_to = DateTime.strptime(params[:to], '%Y-%m-%d')
+            rescue
+              logger.error("to date not valid #{params[:to]}")
+            end
+          end
+
+          #p "promotion code: #{promotion_code} -- from: #{date_from} -- to: #{date_to}"
+
+          if ::Yito::Model::Rates::PromotionCode.valid_code?(promotion_code, date_from, date_to)
             content_type :json
             true.to_json
           else
