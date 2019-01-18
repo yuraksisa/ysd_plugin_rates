@@ -127,7 +127,7 @@ ratePriceAssistantView = {
 
   setupPriceDefinitionEvents: function() {
       $('#update_price_definition_button_<%=@price_definition.id%>').bind('click', function() {
-          ratePriceAssistantController.updatePriceDefinitionButtonClick($(this).form[0]);
+          ratePriceAssistantController.updatePriceDefinitionButtonClick($(this)[0].form);
       });
       $('.price_definition').autoNumeric('init',{aSep:''});
   },
