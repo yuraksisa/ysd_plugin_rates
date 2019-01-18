@@ -3,7 +3,7 @@
 require(['jquery','autonumeric','jquery.formparams','jquery.toast'], function($) {
 ratePriceAssistantModel = {
 
-  updatePriceDefiniton: function() {
+  updatePriceDefiniton: function(form) {
 
       var request = $(form).formParams();
       var requestJson = JSON.stringify(request);
