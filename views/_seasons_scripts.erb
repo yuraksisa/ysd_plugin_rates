@@ -49,6 +49,19 @@
               <option value="12" <%% if(seasons[idx].to_month == 12) { %>selected<%%}%>><%=t.months.december%></option>
           </select>
         </td>
+      <% if @season_definition.apply_min_days%>
+      <td>
+        <input type="number" form="update_season_<%%=seasons[idx].id%>"
+               name="min_days" class="form-control" size="3" maxlength="2" value="<%%=seasons[idx].min_days%>"  style="width: 60px; display: inline-block"/>
+      </td>
+      <% end %>
+      <% if @season_definition.apply_discount_by_days%>
+      <td>
+        <input type="hidden" form="update_season_<%%=seasons[idx].id%>" name="apply_discount_by_days" value="false"/>
+        <input type="checkbox" form="update_season_<%%=seasons[idx].id%>"
+               name="apply_discount_by_days" class="form-control" value="true" <%% if (seasons[idx].apply_discount_by_days){%>checked<%%}%> style="width: 60px; display: inline-block"/>      
+      </td>
+      <% end %>          
         <td>
           <button type="button" form="update_season_<%%=seasons[idx].id%>" class="btn btn-primary update_season_btn" style="width: 32px; display: inline-block"><i class="fa fa-save push-5-r"></i></button>
           <button type="button" form="update_season_<%%=seasons[idx].id%>" class="btn btn-danger delete_season_btn" style="width: 32px; display: inline-block"><i class="fa fa-trash push-5-r"></i></button>

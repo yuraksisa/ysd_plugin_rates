@@ -1,10 +1,10 @@
 <div id="page_wrapper">
-
-  <div id="rates_header" class="content">
-    <%= partial(:rate_assistant_header) %>
-  </div>
-
-  <div id="rates_detail" class="content" data-price-definition-id="<%=@price_definition.id%>">
+  <% if @price_definition.apply_standard_price or @price_definition.apply_base_price or @price_definition.apply_max_price %>
+    <div id="rates_header">
+      <%= partial(:rate_assistant_header) %>
+    </div>
+  <% end %>
+  <div id="rates_detail" data-price-definition-id="<%=@price_definition.id%>">
     <div class="row">
       <div class="col-lg-12">
         <span id="edit_season" role="button" class="btn btn-default pull-right" data-season-definition-id="<%=@season_definition.id%>">Gestionar temporadas</span>
@@ -14,7 +14,6 @@
       <%= partial(:rate_assistant_rates_detail) %>
     </div>
   </div>
-
   <!-- ========================================= -->
   <!--         Season management MODAL           -->
   <!-- ========================================= -->
@@ -35,7 +34,5 @@
       </div>
     </div>
   </div>
-
   <%= partial :seasons_scripts %>
-
 </div>

@@ -1,10 +1,10 @@
 <div id="page_wrapper">
-
-  <div id="rates_header" class="content">
-  <%= partial(:rate_assistant_header) %>
-  </div>
-
-  <div id="rates_detail" class="content">
+  <% if @price_definition.apply_standard_price or @price_definition.apply_base_price or @price_definition.apply_max_price %>	
+	  <div id="rates_header">
+	  <%= partial(:rate_assistant_header) %>
+	  </div>
+  <% end %>
+  <div id="rates_detail">
     <%= partial(:rate_assistant_rates_detail_no_season) %>
   </div>
 </div>

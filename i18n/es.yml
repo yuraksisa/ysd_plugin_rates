@@ -104,10 +104,10 @@ rate_price_assistant:
   rates: Precios
   season_units: Temporada / Unidades-días
   season: Temporada
-  unit: 1 unidad/día
-  units: Unidades-días          
+  unit: 1 día
+  units: Día/s          
   no_limit: No hay límite
-  extra: Extra
+  extra: Día Extra
   standard_price:
     label: Precio estándar
     description: Precio estándar (tarifa por defecto)
@@ -177,6 +177,8 @@ season_edition:
     name: Nombre
     from: Desde
     to: Hasta
+    min_days: Días mínimo
+    apply_discount_by_days: Descuento por días
     update_button: Actualizar
     create_button: Añadir
     delete_button: Eliminar

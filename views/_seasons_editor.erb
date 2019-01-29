@@ -22,6 +22,12 @@
     <th><%=t.season_edition.table.name%></th>
     <th><%=t.season_edition.table.from%></th>
     <th><%=t.season_edition.table.to%></th>
+    <% if @season_definition.apply_min_days%>
+    <th><%=t.season_edition.table.min_days%></th>
+    <% end %>
+    <% if @season_definition.apply_discount_by_days%>
+    <th><%=t.season_edition.table.apply_discount_by_days%></th>
+    <% end %>
     <th></th>
   </tr>
   </thead>
@@ -72,6 +78,18 @@
           <option value="12" <% if season.to_month == 12%>selected<%end%>><%=t.months.december%></option>
         </select>
       </td>
+      <% if @season_definition.apply_min_days%>
+      <td>
+        <input type="number" form="update_season_<%=season.id%>"
+               name="min_days" class="form-control" size="3" maxlength="2" value="<%=season.min_days%>"  style="width: 60px; display: inline-block"/>
+      </td>
+      <% end %>
+      <% if @season_definition.apply_discount_by_days%>
+      <td>
+        <input type="hidden" form="update_season_<%=season.id%>" name="apply_discount_by_days" value="false"/>
+        <input type="checkbox" form="update_season_<%=season.id%>" name="apply_discount_by_days" class="form-control" value="true" <% if season.apply_discount_by_days%>checked<%end%> style="width: 60px; display: inline-block"/>      
+      </td>
+      <% end %>      
       <td>
         <button type="button" form="update_season_<%=season.id%>"
                 class="btn btn-primary col-md-1 update_season_btn" style="width: 32px; display: inline-block"><i class="fa fa-save push-5-r" style="position:relative; left: -2px"></i></button>
@@ -125,6 +143,18 @@
         <option value="12"><%=t.months.december%></option>
       </select>
     </td>
+    <% if @season_definition.apply_min_days%>
+    <td>
+      <input type="number" form="new_season"
+             name="min_days" class="form-control" size="3" maxlength="2"  style="width: 60px; display: inline-block"/>
+    </td>
+    <% end %>
+    <% if @season_definition.apply_discount_by_days%>
+    <td>
+      <input type="hidden" name="apply_discount_by_days" form="new_season" value="false"/>
+      <input type="checkbox" name="apply_discount_by_days" class="form-control" value="true" style="width: 60px; display: inline-block"/>      
+    </td>
+    <% end %>
     <td>
       <button type="button" form="new_season"
               id="create_season_btn" type="button" class="btn btn-success" style="width: 66px"><%=t.season_edition.table.create_button%></button>

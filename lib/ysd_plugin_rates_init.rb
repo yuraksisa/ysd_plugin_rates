@@ -8,6 +8,7 @@ Plugins::SinatraAppPlugin.register :rates do
    description= 'Rates integration'
    version=     '0.1'
 
+   hooker       Huasi::RatesExtension
    sinatra_helper Sinatra::RateHelpers
    sinatra_extension Sinatra::YitoExtension::Rates
    sinatra_extension Sinatra::YitoExtension::SeasonDefinitionManagement

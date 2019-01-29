@@ -3,22 +3,25 @@
     <% rows = 1 %>
     <% item_count = @price_definition.season_definition.seasons.size %>
     <% if item_count >= 7
-         items_in_column = 7 #item_count / 1
+         items_in_column = 7 
          data = @price_definition.season_definition.seasons.each_slice(items_in_column).to_a
        else
          items_in_column = item_count
          data = [@price_definition.season_definition.seasons]
        end
+       columns = data.size
     %>
-
     <div class="row">
       <% data.each do |sublist| %>
-        <div class="col-lg-4">
-          <table id="elements_table" class="table">
+        <div class="col-lg-<%=12/(data.size)%>">
+          <table id="elements_table" class="table table-striped">
             <thead class="table-header">
             <tr>
-              <th class="table-header-title left_text" scope="col" style="width:50%"><%=t.rate_price_assistant.season%></th>
-              <th class="table-header-title centered_text" scope="col" style="width:50%"><%=t.rate_price_assistant.unit%></th>
+              <th class="table-header-title left_text" scope="col"  style="width: 20%"><%=t.rate_price_assistant.season%></th>
+              <th class="table-header-title centered_text" scope="col"  style="width: 20%"><%=t.rate_price_assistant.unit%></th>
+              <% if columns == 1 %>
+              <th class="table-header-title" scope="col" style="width: 50%"></th>
+              <% end %>
             </tr>
             </thead>
             <tbody class="table-tbody">
@@ -49,6 +52,9 @@
                         <% end %>
                       </span>
                 </td>
+                <% if columns == 1 %>
+                <td class="table-cell"></td>
+                <% end %>
               </tr>
             <% end %>
             </tbody>
@@ -57,10 +63,8 @@
       <% end %>
     </div>
   <% end %>
-
 <% else %>
-
-  <table id="elements_table" class="table">
+  <table id="elements_table" class="table table-striped">
     <thead class="table-header">
     <tr>
       <th class="table-header-title left_text" scope="col" style="width:20%"><%=t.rate_price_assistant.season%></th>

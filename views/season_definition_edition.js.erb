@@ -14,6 +14,9 @@ require(['jquery','ysdtemplate','YSDEventTarget', 'autonumeric','jquery.formpara
        addSeason: function() {
            var id = $('#seasons_table').attr('data-season-id');
            var request = $('form[name=new_season]').formParams();
+           if (request.apply_discount_by_days) {
+             request.apply_discount_by_days = request.apply_discount_by_days[request.apply_discount_by_days.length-1];
+           }
            var requestJSON = JSON.stringify(request);
            var url = '/api/rate-season-def/'+id+'/season';
            $.ajax({
@@ -45,6 +48,10 @@ require(['jquery','ysdtemplate','YSDEventTarget', 'autonumeric','jquery.formpara
 
           var url = '/api/rate-season/'+request.id;
           delete request['id'];
+          if (request.apply_discount_by_days) {
+            request.apply_discount_by_days = request.apply_discount_by_days[request.apply_discount_by_days.length-1];
+          }
+
           var requestJSON = JSON.stringify(request);
 
           $.ajax({
